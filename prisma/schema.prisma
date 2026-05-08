@@ -1,0 +1,67 @@
+// Prisma schema for the pinka.finance waitlist.
+//
+// Local dev: point DATABASE_URL at a local Postgres (Docker, Postgres.app)
+// or a Neon/Supabase free-tier instance. Vercel Postgres is used in production.
+//
+// To apply schema changes: `npm run db:push`
+
+generator client {
+  provider      = "prisma-client-js"
+  // Add Alpine ARM64 target so the same image builds on macOS dev machines and
+  // ARM64 hosts (Oracle Cloud Ampere, Coolify on ARM, etc.).
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WaitlistRole {
+  donor
+  creator
+  investor
+  media
+}
+
+model WaitlistSignup {
+  id        String       @id @default(cuid())
+  email     String       @unique
+  name      String?
+  role      WaitlistRole
+
+  // Donor
+  podcasts      String?  @db.Text
+
+  // Creator / organization
+  orgName       String?
+  link          String?
+  audienceSize  String?
+  orgType       String?
+
+  // Investor
+  fundName      String?
+  fundLink      String?
+  investTypes   String?  // comma-separated: pre-seed,seed,partnership,advisory
+
+  // Media
+  publication   String?
+  coverageType  String?  @db.Text
+
+  // Lightweight auditing
+  ipHash        String?
+  userAgent     String?  @db.Text
+  source        String?  // primary, footer, modal
+
+  createdAt     DateTime @default(now())
+
+  @@index([role])
+  @@index([createdAt])
+}
+
+model NewsletterSignup {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  ipHash    String?
+  createdAt DateTime @default(now())
+}
