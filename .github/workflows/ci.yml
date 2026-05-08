@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate-structure:
+    name: Validate repository structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify community files
+        run: |
+          set -e
+          test -f README.md          && echo "✓ README.md"
+          test -f LICENSE            && echo "✓ LICENSE"
+          test -f CONTRIBUTING.md    && echo "✓ CONTRIBUTING.md"
+          test -f CODE_OF_CONDUCT.md && echo "✓ CODE_OF_CONDUCT.md"
+          test -f SECURITY.md        && echo "✓ SECURITY.md"
+          test -f .gitignore         && echo "✓ .gitignore"
+          test -f .editorconfig      && echo "✓ .editorconfig"
+          echo "Structure check passed."

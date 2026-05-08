@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General questions
+    url: mailto:hello@pinka.finance
+    about: For questions that aren't bugs or feature requests
+  - name: Security disclosures
+    url: mailto:security@pinka.finance
+    about: Report security vulnerabilities privately (see SECURITY.md)
