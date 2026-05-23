@@ -11,7 +11,7 @@ jobs:
     name: Validate repository structure
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Verify community files
         run: |
