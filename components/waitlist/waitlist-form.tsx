@@ -50,8 +50,8 @@ const ROLE_OPTIONS: {
   },
   {
     value: "creator",
-    label: "Kreator / udruga / tim",
-    description: "Pokrećem kampanju i primam sredstva.",
+    label: "Klub / udruga / kreator",
+    description: "Pokrećem kampanju i primam sredstva (npr. nogometni klub).",
     icon: Megaphone,
   },
   {

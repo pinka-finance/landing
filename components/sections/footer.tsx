@@ -31,6 +31,7 @@ export function Footer() {
               title="Pinka"
               links={[
                 { label: "Kako radi", href: "#how" },
+                { label: "Nogomet", href: "#nogomet" },
                 { label: "Tehnologija", href: "#built-on" },
                 { label: "Plan razvoja", href: "#roadmap" },
                 { label: "Česta pitanja", href: "#faq" },

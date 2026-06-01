@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 const milestones = [
   {
     quarter: "Q3 2026",
-    title: "Pilot s prvih 5 kampanja",
-    body: "Odabrana skupina. Svaki tim uvodimo ručno i slušamo svaku povratnu informaciju.",
+    title: "Pilot s prvih 5 nogometnih klubova",
+    body: "Odabrana skupina amaterskih klubova. Svaki uvodimo ručno i slušamo svaku povratnu informaciju.",
     state: "next" as const,
   },
   {
