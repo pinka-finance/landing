@@ -1,23 +1,34 @@
-# pinka.finance
+# pinka.finance — landing
 
-> Pre-launch landing page for **pinka.finance** — a Croatian podcast crowdfunding platform built on Monerium EURe and SEPA Instant.
+> Pre-launch landing page for **pinka.finance** — a Croatian onchain group-funding (crowdfunding) platform built on Monerium EURe, Safe and SEPA Instant.
 
 [![Status: Pre-launch](https://img.shields.io/badge/status-pre--launch-orange)](#)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Made in Croatia](https://img.shields.io/badge/made%20in-Croatia%20%F0%9F%87%AD%F0%9F%87%B7-red)](#)
 
+## Domains — read this first
+
+This repo is **only the marketing landing page**. There are two separate web properties:
+
+| Domain | What | Source |
+| --- | --- | --- |
+| **pinka.finance** | Marketing **landing page** (this repo) | `pinka-finance/landing` |
+| **pinka.io** | The actual **application** — public campaign pages + EPC/SEPA checkout | `pinka-finance/app` |
+
+When the landing needs to link out to the live product, link to **https://pinka.io**.
+
 ## What is pinka?
 
-pinka is a real-time, zero-fee donation platform for podcasts and the organizations behind them.
+pinka is a real-time, zero-fee **onchain crowdfunding / group-funding** platform. It is *not* podcast-specific — it supports several campaign types: donacije (donations), crowdfunding with a target goal, ulaznice (tickets), soft tokenizacija (on-chain attestation badges, not securities) and grupno financiranje nekretnina (real-estate).
 
-Listeners donate by scanning a QR code at checkout in their banking app — funds settle in seconds via SEPA Instant and the Monerium-issued EURe stablecoin. Recipient organizations claim their share on their own schedule, on-chain, with full transparency.
+Supporters pay by scanning a SEPA QR code in their banking app — funds settle in seconds via SEPA Instant and the Monerium-issued EURe stablecoin, into a per-campaign Safe multisig. Organizers withdraw on their own schedule, on-chain, with full transparency.
 
-The platform sustains itself through optional donor tips (Zeffy-style), not transaction fees on creators or causes.
+The platform sustains itself through optional supporter tips (Zeffy-style), not transaction fees on creators or causes.
 
 ## Built on
 
 - **[Monerium](https://monerium.com)** — MiCA-licensed e-money institution issuing EURe
-- **[Safe](https://safe.global)** — Industry-standard multisig treasury security
+- **[Safe](https://safe.global)** — industry-standard multisig for treasury security
 - **[Gnosis Chain](https://www.gnosis.io)** — EVM settlement layer optimized for EURe
 
 ## Status
@@ -26,114 +37,105 @@ The platform sustains itself through optional donor tips (Zeffy-style), not tran
 
 ## Stack
 
-- Next.js 14+ (App Router)
+- Next.js 14 (App Router), **static export** (`output: "export"`)
 - TypeScript (strict mode)
-- Tailwind CSS
+- Tailwind CSS + Radix primitives
 - Framer Motion
-- Prisma + Postgres
-- Resend (transactional email)
-- Vercel (deployment)
+- **Cloudflare Workers + Static Assets** (hosting) with **D1** for waitlist/newsletter signups
+- Optional [Resend](https://resend.com) for transactional email (called from the Worker via `fetch`)
 
-## Local Development
+There is no application server and no Postgres/Prisma — the site is fully static, and the only dynamic surface is the Worker in [`worker/index.js`](./worker/index.js).
+
+## Local development
 
 ### Prerequisites
 
 - Node.js 20+ (see [.nvmrc](./.nvmrc))
-- A PostgreSQL database — use a local instance or a free [Neon](https://neon.tech) / [Supabase](https://supabase.com) project. SQLite works only with a manual schema swap; we keep Postgres in both environments for prod parity.
-- (Optional) A [Resend](https://resend.com) API key. Without one, confirmation emails are logged to stdout instead of sent.
-
-### One-time setup
-
-```bash
-# 1. Copy env template and fill in DATABASE_URL (and RESEND_API_KEY if you have one)
-cp .env.example .env
-
-# 2. Install deps
-npm install
-
-# 3. Push the Prisma schema to your database
-npm run db:push
-```
+- (Optional) A [Resend](https://resend.com) API key for live confirmation emails.
 
 ### Run
 
 ```bash
-npm run dev          # http://localhost:3000
-npm run build        # production build
+npm install
+npm run dev          # http://localhost:3000 (Next dev server)
+npm run build        # static export → ./out
 npm run typecheck    # tsc --noEmit
 npm run lint         # next lint
-npm run db:studio    # Prisma Studio at http://localhost:5555
 ```
+
+> Note: `npm run dev` runs the normal Next dev server, but the `/api/waitlist`
+> and `/api/newsletter` endpoints only exist in the deployed Worker. To exercise
+> them locally, run `npx wrangler dev` (serves `./out` + the Worker, with a local
+> D1) after a `npm run build`.
 
 ### What's where
 
 ```
 app/
-  api/waitlist        # segmented signup endpoint
-  api/newsletter      # footer email capture
   page.tsx            # composes all sections
-  layout.tsx          # global metadata + fonts
-  opengraph-image.tsx # dynamic OG image generator
+  layout.tsx          # global metadata + fonts + JSON-LD
+  opengraph-image.tsx # build-time OG image (next/og, static)
+  icon.tsx            # build-time favicon
+  robots.ts / sitemap.ts
   privacy / terms     # legal pages
 
 components/
   sections/           # one file per landing section
-  waitlist/           # form + dialog
+  waitlist/           # segmented signup form + dialog
   ui/                 # shadcn-style primitives
-  phone-mockup.tsx    # animated hero device
-  section-reveal.tsx  # scroll-reveal wrapper
+  phone-mockup.tsx    # animated hero device (campaign QR demo)
 
 lib/
-  db.ts               # Prisma client singleton
-  email.ts            # Resend wrapper + dev-mode logger
-  waitlist-schema.ts  # zod schemas (shared client + server)
+  utils.ts            # cn() helper
+  waitlist-schema.ts  # zod schemas (client-side validation)
 
-prisma/
-  schema.prisma       # WaitlistSignup + NewsletterSignup
+worker/
+  index.js            # Cloudflare Worker: serves ./out + /api/* → D1
+
+d1/
+  schema.sql          # waitlist_signups + newsletter_signups tables
+
+public/
+  _headers            # security headers + PNG MIME for /icon, /opengraph-image
 ```
 
-### Deployment options
+## Deployment — Cloudflare (wrangler)
 
-#### Vercel
-
-1. Connect the GitHub repo to a new Vercel project.
-2. Set environment variables: `DATABASE_URL`, `RESEND_API_KEY`, `RESEND_FROM`, `NEXT_PUBLIC_SITE_URL`, optionally `WAITLIST_NOTIFY_EMAIL`.
-3. Vercel auto-detects Next.js. The build runs `prisma generate && next build` (see [vercel.json](./vercel.json) — region pinned to `fra1`).
-4. Add `pinka.finance` as the production domain. HTTPS and HSTS are enforced via [next.config.mjs](./next.config.mjs) headers.
-
-#### Self-host with Docker (Coolify, Dokploy, plain `docker compose`)
-
-The repo ships a multi-stage [`Dockerfile`](./Dockerfile) (Next.js standalone output, runs as non-root) and a [`docker-compose.yml`](./docker-compose.yml) with `web` + `postgres` services. Image is multi-arch — works on both x86_64 and ARM64 (Oracle Cloud Ampere, Raspberry Pi, Coolify on ARM hosts).
-
-**Local smoke test:**
+The landing is deployed as a **Worker with Static Assets** on the **pinka.finance** apex
+(zone in the `D.O.M.` Cloudflare account). Config lives in [`wrangler.toml`](./wrangler.toml).
 
 ```bash
-export POSTGRES_PASSWORD="$(openssl rand -base64 24)"
-docker compose up --build      # http://localhost:3000
+# Account that owns the pinka.finance zone:
+export CLOUDFLARE_ACCOUNT_ID=7dc7167b7e2e00923bfa7cd697df14e4
+
+# 1. (one time) create the D1 database, then put its id in wrangler.toml
+wrangler d1 create pinka-landing
+
+# 2. (one time) apply the schema
+npm run cf:d1:init        # wrangler d1 execute pinka-landing --remote --file=./d1/schema.sql
+
+# 3. build + deploy (uploads ./out as assets, binds D1, attaches the apex route)
+npm run cf:deploy         # npm run build && wrangler deploy
+
+# 4. (optional) transactional email via Resend
+wrangler secret put RESEND_API_KEY
+wrangler secret put WAITLIST_NOTIFY_EMAIL   # admin signup notifications
+# and uncomment RESEND_FROM under [vars] in wrangler.toml
 ```
 
-**Coolify:**
+The Worker route `pinka.finance/*` attaches to the existing proxied DNS record for the apex.
 
-1. In your Coolify dashboard, *New Resource → Public Repository* and point it at this GitHub repo.
-2. Coolify auto-detects `docker-compose.yml`. Pick the `web` service as the application.
-3. Under *Environment Variables*, set:
-   - `POSTGRES_PASSWORD` — generate a strong value (e.g. `openssl rand -base64 32`)
-   - `RESEND_API_KEY` — your Resend production key
-   - `RESEND_FROM` — `pinka <hello@pinka.finance>` (or your verified sender)
-   - `NEXT_PUBLIC_SITE_URL` — `https://pinka.finance`
-   - `WAITLIST_NOTIFY_EMAIL` — optional admin notification address
-4. Bind the domain `pinka.finance` to the `web` service. Coolify provisions Let's Encrypt automatically via its bundled Traefik proxy.
-5. Deploy. The container's entrypoint runs `prisma db push --skip-generate` on every boot to keep the schema in sync — idempotent, safe to re-run.
-
-The Postgres volume `pinka_pg_data` is persisted by Coolify; back it up via Coolify's scheduled backup feature or `pg_dump`.
-
-To migrate beyond simple additive schema changes, generate proper migrations locally with `npx prisma migrate dev --name <change>`, commit them under `prisma/migrations/`, and switch the entrypoint to `prisma migrate deploy`.
+> **Note on Cloudflare Access:** the apex was previously gated by a Cloudflare Access
+> (Zero Trust) application. For the public landing this must be removed in the dashboard:
+> *Zero Trust → Access → Applications → the app with domain `pinka.finance` → Delete*
+> (or set its policy to *Bypass / Everyone*). It should not be active for this domain.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
 
 ## Links
 
-- 🌐 [pinka.finance](https://pinka.finance) — coming soon
+- 🌐 [pinka.finance](https://pinka.finance) — landing (this repo)
+- 🚀 [pinka.io](https://pinka.io) — the app
 - 🐙 [pinka-finance](https://github.com/pinka-finance) — GitHub organization
 - 📧 [hello@pinka.finance](mailto:hello@pinka.finance) — general inquiries
 - 🔒 [security@pinka.finance](mailto:security@pinka.finance) — security disclosures (see [SECURITY.md](./SECURITY.md))

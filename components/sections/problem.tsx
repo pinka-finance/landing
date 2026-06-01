@@ -4,18 +4,18 @@ import { SectionReveal } from "@/components/section-reveal";
 const items = [
   {
     icon: CreditCard,
-    title: "Kartični procesori uzimaju 2–5%",
-    body: "od svake donacije. Mali kreatori najviše gube — od 100 € prikupljenih, 5 € odlazi prije nego što išta vide.",
+    title: "Kartični procesori uzimaju 2–5 %",
+    body: "od svake uplate. Mali organizatori najviše gube — od 100 € prikupljenih, 5 € odlazi prije nego što išta vide.",
   },
   {
     icon: Hourglass,
-    title: "Bankovni transferi traju danima.",
-    body: "Kreator ne zna kada će novac stići, a donator ne zna je li uopće pristigao. Povratna petlja je razbijena.",
+    title: "Bankovni prijenosi traju danima.",
+    body: "Organizator ne zna kada će novac stići, a podržavatelj ne zna je li uopće pristigao. Povratna veza je razbijena.",
   },
   {
     icon: Receipt,
-    title: "Postojeće platforme uzimaju 5–15%.",
-    body: "Patreon, GoFundMe, Buy Me a Coffee — svaka ima svoju proviziju, svaka traži svoj račun, svaka ima svoja pravila.",
+    title: "Postojeće platforme uzimaju 5–15 %.",
+    body: "Patreon, GoFundMe, Kickstarter — svaka ima svoju proviziju, svaka traži svoj račun, svaka ima svoja pravila.",
   },
 ];
 
@@ -30,11 +30,11 @@ export function Problem() {
         <SectionReveal className="max-w-3xl">
           <span className="eyebrow">Problem</span>
           <h2 id="problem-heading" className="mt-4 text-display-lg">
-            Donacije ne bi trebale biti komplicirane.
+            Prikupljanje sredstava ne bi trebalo biti komplicirano.
           </h2>
           <p className="mt-5 text-lg text-inkSoft">
-            Današnja infrastruktura kažnjava male kreatore i organizacije. Što manje primaš, to
-            te provizija više boli.
+            Današnja infrastruktura kažnjava male kreatore, udruge i timove. Što manje
+            primaš, to te provizija više boli.
           </p>
         </SectionReveal>
 

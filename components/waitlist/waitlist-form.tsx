@@ -5,8 +5,8 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Headphones,
-  Mic,
+  HandCoins,
+  Megaphone,
   Briefcase,
   Newspaper,
   CheckCircle2,
@@ -44,15 +44,15 @@ const ROLE_OPTIONS: {
 }[] = [
   {
     value: "donor",
-    label: "Donator / Slušatelj podcasta",
-    description: "Želim podržati podcaste koje slušam.",
-    icon: Headphones,
+    label: "Podržavatelj",
+    description: "Želim podržavati kampanje, projekte i organizacije.",
+    icon: HandCoins,
   },
   {
     value: "creator",
-    label: "Kreator podcasta / Organizacija",
-    description: "Primam donacije od svoje publike.",
-    icon: Mic,
+    label: "Kreator / udruga / tim",
+    description: "Pokrećem kampanju i primam sredstva.",
+    icon: Megaphone,
   },
   {
     value: "investor",
@@ -132,9 +132,20 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6" noValidate>
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className={cn(
+        "space-y-6",
+        // In the modal (compact) the dialog is wide on desktop, so lay the form
+        // out in two columns — role picker left, fields right — to use the
+        // horizontal space and avoid a tall, scrolling single column.
+        compact &&
+          "md:grid md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:gap-x-7 md:items-start md:space-y-0"
+      )}
+    >
       {/* Step 1: Role picker */}
-      <fieldset>
+      <fieldset className={cn(compact && "md:self-start")}>
         <legend className="block text-sm font-medium text-ink mb-2.5">
           Tko si?
         </legend>
@@ -142,7 +153,16 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
           control={form.control}
           name="role"
           render={({ field }) => (
-            <div role="radiogroup" aria-required className="grid sm:grid-cols-2 gap-2.5">
+            <div
+              role="radiogroup"
+              aria-required
+              className={cn(
+                "grid gap-2.5",
+                // 2×2 on phones/tablets; single column inside the narrow left
+                // column of the desktop modal layout.
+                compact ? "sm:grid-cols-2 md:grid-cols-1" : "sm:grid-cols-2"
+              )}
+            >
               {ROLE_OPTIONS.map((opt) => {
                 const Icon = opt.icon;
                 const selected = field.value === opt.value;
@@ -194,6 +214,8 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
         )}
       </fieldset>
 
+      {/* Right column (on desktop modal): common + conditional fields + submit */}
+      <div className={cn("space-y-6", compact && "md:space-y-4")}>
       {/* Step 2: Common fields */}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
@@ -261,7 +283,7 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
               Spremam…
             </>
           ) : (
-            "Pridruži se waitlist-u"
+            "Pridruži se listi čekanja"
           )}
         </Button>
 
@@ -276,12 +298,13 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
         )}
 
         <p className="text-xs text-inkMuted leading-relaxed">
-          Tvoji podaci ostaju kod nas. Ne dijelimo, ne prodajemo, ne spamamo.{" "}
+          Tvoji podaci ostaju kod nas. Ne dijelimo ih, ne prodajemo i ne šaljemo spam.{" "}
           <a href="/privacy" className="underline underline-offset-2 hover:text-ink">
-            Privacy policy
+            Pravila privatnosti
           </a>
           .
         </p>
+      </div>
       </div>
     </form>
   );
@@ -304,13 +327,13 @@ function FieldError({ message }: { message?: string }) {
 function DonorFields({ form }: { form: FormCtx }) {
   return (
     <div>
-      <Label htmlFor="podcasts">Koje podcaste pratiš?</Label>
+      <Label htmlFor="interests">Što bi želio podržati?</Label>
       <Textarea
-        id="podcasts"
-        placeholder="npr. Geek Krug, Dobar Dan Hrvatska, …"
-        {...form.register("podcasts")}
+        id="interests"
+        placeholder="npr. lokalne udruge, kreatori, projekti, klubovi…"
+        {...form.register("interests")}
       />
-      <p className="mt-1 text-xs text-inkMuted">Opcionalno — pomaže nam prioritizirati pilote.</p>
+      <p className="mt-1 text-xs text-inkMuted">Neobavezno — pomaže nam odrediti prioritete pilota.</p>
     </div>
   );
 }
@@ -322,7 +345,7 @@ function CreatorFields({ form }: { form: FormCtx }) {
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="orgName">
-            Naziv podcasta / organizacije <span className="text-coral" aria-hidden>*</span>
+            Naziv kampanje / organizacije <span className="text-coral" aria-hidden>*</span>
           </Label>
           <Input
             id="orgName"
@@ -347,10 +370,10 @@ function CreatorFields({ form }: { form: FormCtx }) {
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="audienceSize">Veličina audijencije</Label>
+          <Label htmlFor="audienceSize">Veličina zajednice</Label>
           <Input
             id="audienceSize"
-            placeholder="npr. ~3k preuzimanja po epizodi"
+            placeholder="npr. ~3.000 pratitelja / članova"
             {...form.register("audienceSize")}
           />
         </div>
@@ -430,7 +453,7 @@ function InvestorFields({ form }: { form: FormCtx }) {
           control={form.control}
           name="investTypes"
           render={({ field }) => (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {INVEST_TYPES.map((opt) => {
                 const checked = (field.value as string[] | undefined)?.includes(opt) ?? false;
                 return (
@@ -488,7 +511,7 @@ function MediaFields({ form }: { form: FormCtx }) {
         <Label htmlFor="coverageType">Tip pokrivanja</Label>
         <Textarea
           id="coverageType"
-          placeholder="npr. featured story, podcast intervju, newsletter mention…"
+          placeholder="npr. članak, intervju, spomen u newsletteru…"
           {...form.register("coverageType")}
         />
       </div>
@@ -520,7 +543,7 @@ function SuccessState({
       <h3 className="font-display text-2xl text-ink mb-1">Pridružio si se. ✓</h3>
       <p className="text-inkSoft text-sm sm:text-base">
         Poslali smo potvrdu na <strong className="text-ink">{email}</strong>. Vidimo se na
-        launchu.
+        lansiranju.
       </p>
     </motion.div>
   );

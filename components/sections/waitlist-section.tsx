@@ -16,18 +16,18 @@ export function WaitlistSection() {
       <div className="container-content relative">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start">
           <SectionReveal className="max-w-xl lg:sticky lg:top-32">
-            <span className="eyebrow">Waitlist</span>
+            <span className="eyebrow">Lista čekanja</span>
             <h2 id="waitlist-heading" className="mt-4 text-display-lg">
               Pridruži se prvom valu.
             </h2>
             <p className="mt-5 text-lg text-inkSoft leading-relaxed">
-              Pišemo svima koji se prijave kad budemo spremni. Najprije curated cohort od pet
-              podcasta, zatim svima u SEPA zoni.
+              Pišemo svima koji se prijave čim budemo spremni. Najprije odabranoj skupini od
+              pet kampanja, a zatim svima u SEPA zoni.
             </p>
             <ul className="mt-8 space-y-3 text-base text-inkSoft">
-              <BulletItem>Bez spamanja. Maksimalno jedan email po lansiranju.</BulletItem>
-              <BulletItem>Pilot pristup za prvih 5 podcasta i organizacija.</BulletItem>
-              <BulletItem>Direktan kontakt s timom za sva pitanja.</BulletItem>
+              <BulletItem>Bez spama. Najviše jedan e-mail po lansiranju.</BulletItem>
+              <BulletItem>Pilot pristup za prvih 5 kampanja i organizacija.</BulletItem>
+              <BulletItem>Izravan kontakt s timom za sva pitanja.</BulletItem>
             </ul>
           </SectionReveal>
 

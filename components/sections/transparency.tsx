@@ -5,10 +5,10 @@ import { SectionReveal } from "@/components/section-reveal";
 import { cn } from "@/lib/utils";
 
 const platforms = [
-  { name: "Pinka", percent: 100, accent: "coral", note: "0% obavezno · opcionalna napojnica" },
-  { name: "Stripe + manual", percent: 96.5, accent: "neutral", note: "~2.9% + €0.30 po transakciji" },
-  { name: "Patreon", percent: 91, accent: "neutral", note: "5–12% platform fee + payment processing" },
-  { name: "GoFundMe", percent: 87, accent: "neutral", note: "transaction + tip prompts" },
+  { name: "Pinka", percent: 100, accent: "coral", note: "0 % obavezno · neobavezna napojnica" },
+  { name: "Stripe + ručno", percent: 96.5, accent: "neutral", note: "~2,9 % + 0,30 € po transakciji" },
+  { name: "Patreon", percent: 91, accent: "neutral", note: "5–12 % provizije + obrada plaćanja" },
+  { name: "GoFundMe", percent: 87, accent: "neutral", note: "provizija + poticaji na napojnicu" },
 ];
 
 export function Transparency() {
@@ -27,17 +27,17 @@ export function Transparency() {
             </h2>
             <div className="mt-6 space-y-5 text-lg text-inkSoft leading-relaxed">
               <p>
-                Pinka ne uzima proviziju s donacija. Pri uplati donator opcionalno može
-                dodati malu napojnicu platformi — ti tipovi nas održavaju.
+                Pinka ne uzima proviziju na prikupljena sredstva. Pri uplati podržavatelj može
+                neobavezno dodati malu napojnicu platformi — te napojnice nas održavaju.
               </p>
               <p>
-                Naš treasury je javan on-chain (link kad bude live), i koristimo ga za razvoj
-                platforme i prinos preko reguliranih DeFi protokola.
+                Naša riznica je javna on-chain (poveznica kad bude aktivna) i koristimo je za
+                razvoj platforme te za prinos kroz regulirane DeFi protokole.
               </p>
               <p className="font-display text-xl text-ink">
-                100% donacija ide kreatoru ili organizaciji.
+                100 % sredstava ide organizatoru kampanje.
                 <br />
-                100% transparentno. 0% iznenađenja.
+                100 % transparentno. 0 % iznenađenja.
               </p>
             </div>
           </SectionReveal>
@@ -45,7 +45,7 @@ export function Transparency() {
           <SectionReveal delay={0.1}>
             <div className="rounded-lg border border-ink/8 bg-white/80 p-6 sm:p-8">
               <p className="text-xs uppercase tracking-wider text-inkMuted">
-                Koliko ide kreatoru od 100 € donacije
+                Koliko od 100 € uplate stigne organizatoru
               </p>
               <ul className="mt-5 space-y-4">
                 {platforms.map((p, i) => (
@@ -87,8 +87,8 @@ export function Transparency() {
                 ))}
               </ul>
               <p className="mt-6 text-xs text-inkMuted leading-relaxed">
-                Procjene; stvarne brojke variraju ovisno o regiji, planu i tipu kartice. Pinka
-                postotak isključuje opcionalne napojnice koje donator sam bira.
+                Procjene; stvarni iznosi variraju ovisno o regiji, planu i vrsti kartice.
+                Pinkin postotak ne uključuje neobavezne napojnice koje podržavatelj sam bira.
               </p>
             </div>
           </SectionReveal>

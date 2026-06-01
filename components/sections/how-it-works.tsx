@@ -13,51 +13,51 @@ import {
 import { SectionReveal } from "@/components/section-reveal";
 import { cn } from "@/lib/utils";
 
-const donorSteps = [
+const supporterSteps = [
   {
     icon: QrCode,
-    title: "Skeniraj QR",
-    body: "na podcast stranici ili u show notes-ima — telefonom, kao bilo koju drugu uplatu.",
+    title: "Skeniraj QR kôd",
+    body: "na stranici kampanje ili tamo gdje je organizator podijeli — telefonom, kao bilo koju drugu uplatu.",
   },
   {
     icon: Banknote,
     title: "Potvrdi u svojoj banci ili Revolutu",
-    body: "iznos sam biraš. Bez kreiranja računa, bez kartice, bez novih aplikacija.",
+    body: "iznos sam biraš. Bez otvaranja računa, bez kartice, bez novih aplikacija.",
   },
   {
     icon: CheckCircle2,
-    title: "Donacija stigne u sekundi",
-    body: "kreatoru ili organizaciji koju si odabrao. Ti dobiješ potvrdu, oni dobiju novac.",
+    title: "Uplata stigne u sekundi",
+    body: "kampanji koju si odabrao. Ti dobiješ potvrdu, organizator dobije sredstva.",
   },
 ];
 
 const creatorSteps = [
   {
     icon: Settings2,
-    title: "Registriraj projekt",
-    body: "postavi tko prima donacije i u kojim postocima — ti, tim, organizacija ili kombinacija.",
+    title: "Pokreni kampanju",
+    body: "odaberi tip — donacija, crowdfunding, ulaznice, soft tokenizacija ili nekretnina — i postavi cilj.",
   },
   {
     icon: Share2,
-    title: "Pinka generira QR",
-    body: "dijeli ga s publikom kako ti odgovara — na webu, u opisima epizoda, na društvenim mrežama.",
+    title: "Pinka generira QR i poveznicu",
+    body: "dijeli ih kako ti odgovara — na webu, u objavama, na društvenim mrežama ili uživo.",
   },
   {
     icon: TrendingUp,
-    title: "Donacije se akumuliraju on-chain",
-    body: "javno, transparentno, real-time. Ti i tvoja publika vidite isto stanje u istom trenu.",
+    title: "Sredstva se prikupljaju on-chain",
+    body: "javno, transparentno, u stvarnom vremenu. Ti i tvoja zajednica vidite isto stanje u istom trenu.",
   },
   {
     icon: Wallet,
     title: "Podigni kad budeš spreman",
-    body: "poveži svoj wallet ili banku, šalji u SEPA u par klikova. Bez minimuma, bez obaveza.",
+    body: "sredstvima upravlja tvoj Safe novčanik; isplata u SEPA u par klikova. Bez minimuma, bez obaveza.",
   },
 ];
 
-type Tab = "donor" | "creator";
+type Tab = "supporter" | "creator";
 
 export function HowItWorks() {
-  const [tab, setTab] = useState<Tab>("donor");
+  const [tab, setTab] = useState<Tab>("supporter");
 
   return (
     <section
@@ -72,8 +72,8 @@ export function HowItWorks() {
             Jednostavno za sve.
           </h2>
           <p className="mt-5 text-lg text-inkSoft">
-            Iste tračnice, dvije strane: donator vidi QR i potvrdu. Kreator vidi novac na
-            računu — bez posrednika koji uzima dio na putu.
+            Iste tračnice, dvije strane: podržavatelj vidi QR i potvrdu, organizator vidi
+            sredstva na računu — bez posrednika koji uzima dio na putu.
           </p>
         </SectionReveal>
 
@@ -84,17 +84,17 @@ export function HowItWorks() {
             aria-label="Kako radi"
             className="grid grid-cols-2 gap-1 rounded-md bg-sand p-1 text-sm font-medium"
           >
-            <TabButton active={tab === "donor"} onClick={() => setTab("donor")} controls="panel-donor">
-              Za donatore
+            <TabButton active={tab === "supporter"} onClick={() => setTab("supporter")} controls="panel-supporter">
+              Za podržavatelje
             </TabButton>
             <TabButton active={tab === "creator"} onClick={() => setTab("creator")} controls="panel-creator">
-              Za kreatore
+              Za organizatore
             </TabButton>
           </div>
           <div className="mt-6">
-            {tab === "donor" ? (
-              <Panel id="panel-donor" labelledBy="tab-donor">
-                <StepsList steps={donorSteps} accent="coral" />
+            {tab === "supporter" ? (
+              <Panel id="panel-supporter" labelledBy="tab-supporter">
+                <StepsList steps={supporterSteps} accent="coral" />
               </Panel>
             ) : (
               <Panel id="panel-creator" labelledBy="tab-creator">
@@ -107,13 +107,13 @@ export function HowItWorks() {
         {/* Desktop two columns */}
         <div className="hidden md:grid grid-cols-2 gap-6 lg:gap-10 mt-16">
           <Column
-            title="Za donatore"
-            subtitle="Tri koraka. Bez novog računa."
+            title="Za podržavatelje"
+            subtitle="Tri koraka. Bez otvaranja računa."
             accent="coral"
-            steps={donorSteps}
+            steps={supporterSteps}
           />
           <Column
-            title="Za kreatore i organizacije"
+            title="Za kreatore, udruge i timove"
             subtitle="Četiri koraka. Bez tehničke gimnastike."
             accent="teal"
             steps={creatorSteps}
@@ -176,7 +176,7 @@ function Column({
   title: string;
   subtitle: string;
   accent: "coral" | "teal";
-  steps: typeof donorSteps;
+  steps: typeof supporterSteps;
 }) {
   return (
     <SectionReveal className="rounded-lg border border-ink/8 bg-white/60 p-6 sm:p-8">
@@ -200,7 +200,7 @@ function StepsList({
   steps,
   accent,
 }: {
-  steps: typeof donorSteps;
+  steps: typeof supporterSteps;
   accent: "coral" | "teal";
 }) {
   return (

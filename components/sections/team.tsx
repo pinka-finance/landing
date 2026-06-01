@@ -20,14 +20,14 @@ export function Team() {
             </h2>
             <div className="mt-5 space-y-4 text-lg text-inkSoft leading-relaxed">
               <p>
-                Pinku gradimo od kuhinje, ne od konferencijske dvorane. Iza projekta je tim
-                koji godinama prati hrvatsku podcast scenu i blockchain prostor —
-                <span className="text-ink"> članovi UBIK-a</span>, suradnici lokalnih kreatora,
-                korisnici Monerium ekosistema od dana 1.
+                Pinku gradimo iz kuhinje, ne iz konferencijske dvorane. Iza projekta je tim
+                koji godinama prati hrvatsku kreativnu i blockchain scenu —
+                <span className="text-ink"> članovi UBIK-a</span>, suradnici lokalnih
+                kreatora i udruga te korisnici Monerium ekosustava od prvog dana.
               </p>
               <p>
-                Vjerujemo da se zero-fee donacije u eurima mogu napraviti pošteno — bez tokena,
-                bez yield obećanja, bez „revolucionarnog“ pitching-a.
+                Vjerujemo da se crowdfunding u eurima bez naknada može napraviti pošteno — bez
+                tokena, bez obećanja prinosa, bez „revolucionarnih“ priča.
               </p>
             </div>
 
@@ -56,11 +56,11 @@ export function Team() {
                   <Code2 className="h-4 w-4" aria-hidden />
                 </div>
                 <div>
-                  <p className="font-medium text-ink">Tražimo developere.</p>
+                  <p className="font-medium text-ink">Tražimo razvojne inženjere.</p>
                   <p className="mt-0.5 text-sm text-inkSoft">
-                    TypeScript, EVM, fintech-friendly mindset.{" "}
+                    TypeScript, EVM i sklonost fintechu.{" "}
                     <a
-                      href="mailto:hello@pinka.finance?subject=Pinka%20%E2%80%94%20Developer%20uloga"
+                      href="mailto:hello@pinka.finance?subject=Pinka%20%E2%80%94%20Razvojna%20uloga"
                       className="text-coral underline-offset-2 hover:underline"
                     >
                       Javi se →
@@ -107,7 +107,7 @@ function FounderPortrait() {
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-cream shadow-soft border border-ink/10">
             <span className="font-display text-3xl text-coral">M</span>
           </div>
-          <p className="mt-4 font-display text-xl text-ink">Founder</p>
+          <p className="mt-4 font-display text-xl text-ink">Osnivač</p>
           <p className="mt-0.5 text-sm text-inkMuted">Član UBIK-a · Zagreb</p>
         </div>
       </div>

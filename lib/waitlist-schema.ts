@@ -15,7 +15,7 @@ const baseFields = {
 const donorSchema = z.object({
   ...baseFields,
   role: z.literal("donor"),
-  podcasts: z.string().trim().max(500).optional().or(z.literal("")),
+  interests: z.string().trim().max(500).optional().or(z.literal("")),
 });
 
 const creatorSchema = z.object({

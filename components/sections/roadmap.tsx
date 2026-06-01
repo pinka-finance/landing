@@ -4,32 +4,32 @@ import { cn } from "@/lib/utils";
 const milestones = [
   {
     quarter: "Q3 2026",
-    title: "Pilot s prvih 5 podcasta",
-    body: "Curated cohort. Mi ručno onboardamo svaki tim, slušamo svaki feedback.",
+    title: "Pilot s prvih 5 kampanja",
+    body: "Odabrana skupina. Svaki tim uvodimo ručno i slušamo svaku povratnu informaciju.",
     state: "next" as const,
   },
   {
     quarter: "Q4 2026",
-    title: "Open registration",
-    body: "Self-serve onboarding za sve kreatore i organizacije u SEPA zoni.",
+    title: "Otvorene registracije",
+    body: "Samostalna registracija za sve kreatore, udruge i timove u SEPA zoni.",
     state: "future" as const,
   },
   {
     quarter: "Q1 2027",
-    title: "Public API",
-    body: "Hosting platforme i organizacije integriraju pinku direktno u svoje workflowe.",
+    title: "Javni API",
+    body: "Platforme i organizacije integriraju pinku izravno u svoje tijekove rada.",
     state: "future" as const,
   },
   {
     quarter: "Q2 2027",
-    title: "Cross-border SEPA donacije",
-    body: "Donatori iz cijele EU i EEA — bez tečajnih razlika, bez friction-a.",
+    title: "Prekogranične SEPA uplate",
+    body: "Podržavatelji iz cijele EU i EEA — bez tečajnih razlika, bez prepreka.",
     state: "future" as const,
   },
   {
-    quarter: "Beyond",
-    title: "Više valuta i mobile app",
-    body: "GBP, USD, native iOS/Android aplikacija. Roadmap koji prati zajednica.",
+    quarter: "Dalje",
+    title: "Više valuta i mobilna aplikacija",
+    body: "GBP, USD te izvorna iOS/Android aplikacija. Plan razvoja koji prati zajednica.",
     state: "future" as const,
   },
 ];
@@ -43,7 +43,7 @@ export function Roadmap() {
     >
       <div className="container-content">
         <SectionReveal className="max-w-3xl">
-          <span className="eyebrow">Roadmap</span>
+          <span className="eyebrow">Plan razvoja</span>
           <h2 id="roadmap-heading" className="mt-4 text-display-lg">
             Što slijedi.
           </h2>

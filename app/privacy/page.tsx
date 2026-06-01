@@ -25,7 +25,7 @@ export default function PrivacyPage() {
               <a href="mailto:hello@pinka.finance" className="link">
                 hello@pinka.finance
               </a>
-              ). Organizacijski subjekt će biti registriran prije javnog launcha — ova
+              ). Organizacijski subjekt bit će registriran prije javnog lansiranja — ova
               politika će se ažurirati s točnim podacima.
             </p>
           </Section>
@@ -39,31 +39,32 @@ export default function PrivacyPage() {
                 <strong>Ime</strong> — opcionalno, ako ga sam(a) podijeliš.
               </li>
               <li>
-                <strong>Role-specifični podaci</strong> — ovisno o tome jesi li donator,
+                <strong>Podaci ovisni o ulozi</strong> — ovisno o tome jesi li podržavatelj,
                 kreator/organizacija, investitor ili medij (npr. naziv organizacije, web
-                link).
+                poveznica).
               </li>
               <li>
-                <strong>Tehnički podaci</strong> — hash IP-a (sha-256, ne čuvamo plain IP) i
-                user-agent niz, isključivo za otkrivanje zloupotrebe forme.
+                <strong>Tehnički podaci</strong> — hash IP adrese (sha-256, ne čuvamo izvornu
+                IP adresu) i niz user-agenta, isključivo za otkrivanje zlouporabe obrasca.
               </li>
             </ul>
           </Section>
 
           <Section title="Zašto prikupljamo">
             <p>
-              Da te kontaktiramo kad budemo spremni za pilot ili javni launch. Da
-              prioritiziramo razvoj prema profilu zainteresiranih (više kreatora? više
-              investitora?). Da spriječimo automatske bot prijave.
+              Da te kontaktiramo kad budemo spremni za pilot ili javno lansiranje. Da
+              odredimo prioritete razvoja prema profilu zainteresiranih (više kreatora? više
+              investitora?). Da spriječimo automatske prijave botova.
             </p>
           </Section>
 
           <Section title="Kome ne prosljeđujemo">
             <p>
-              Tvoje podatke ne prodajemo, ne licenciramo, ne razmjenjujemo s trećim stranama
-              za marketing. Koristimo Resend (pružatelj email infrastrukture, EU/US sa
-              Standard Contractual Clauses) za slanje transakcijske pošte i Vercel
-              (hosting). Oba imaju svoje DPAs.
+              Tvoje podatke ne prodajemo, ne licenciramo niti ih razmjenjujemo s trećim
+              stranama u marketinške svrhe. Koristimo Resend (pružatelj e-mail
+              infrastrukture, EU/US uz Standardne ugovorne klauzule) za slanje transakcijske
+              pošte te Cloudflare (hosting i baza prijava). Oba imaju svoje ugovore o obradi
+              podataka (DPA).
             </p>
           </Section>
 
@@ -80,9 +81,9 @@ export default function PrivacyPage() {
 
           <Section title="Cookies">
             <p>
-              Trenutno ne koristimo analytics niti tracking cookies. Ako to dodamo prije
-              launcha, ažurirat ćemo ovu politiku i dodati opt-in banner sukladno ePrivacy
-              direktivi.
+              Trenutno ne koristimo analitičke ni kolačiće za praćenje. Ako ih dodamo prije
+              lansiranja, ažurirat ćemo ovu politiku i dodati banner s privolom sukladno
+              ePrivacy direktivi.
             </p>
           </Section>
 

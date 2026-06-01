@@ -21,17 +21,20 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pinka.finance";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "pinka — Doniraj podcastu jednim skenom",
+    default: "pinka — Crowdfunding jednim skenom",
     template: "%s · pinka",
   },
   description:
-    "Pinka spaja SEPA Instant i Monerium EURe tako da donatori daju, a kreatori i organizacije primaju — bez kartičnih provizija, bez čekanja, bez kompromisa.",
+    "Pinka je onchain platforma za grupno financiranje. Spaja SEPA Instant i Monerium EURe pa podržavatelji uplate skenom, a kreatori, udruge i timovi primaju sredstva izravno — bez kartičnih provizija, bez čekanja.",
   keywords: [
-    "podcast donacije",
+    "crowdfunding",
+    "onchain crowdfunding",
+    "grupno financiranje",
+    "donacije",
     "SEPA Instant",
     "Monerium",
     "EURe",
-    "crowdfunding",
+    "Gnosis",
     "Hrvatska",
     "blockchain",
     "fintech",
@@ -43,21 +46,21 @@ export const metadata: Metadata = {
     locale: "hr_HR",
     url: siteUrl,
     siteName: "pinka",
-    title: "pinka — Doniraj podcastu jednim skenom",
+    title: "pinka — Crowdfunding jednim skenom",
     description:
-      "SEPA Instant + Monerium EURe. Bez kartičnih provizija. Bez čekanja. 100% donacije ide kreatoru ili organizaciji.",
+      "SEPA Instant + Monerium EURe. Bez kartičnih provizija. Bez čekanja. 100 % sredstava ide organizatoru kampanje.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "pinka — Doniraj podcastu jednim skenom",
+        alt: "pinka — Crowdfunding jednim skenom",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "pinka — Doniraj podcastu jednim skenom",
+    title: "pinka — Crowdfunding jednim skenom",
     description:
       "SEPA Instant + Monerium EURe. Bez kartičnih provizija. Bez čekanja.",
     images: ["/opengraph-image"],
@@ -83,6 +86,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Lock the mobile viewport to 100% — pinch-to-zoom currently breaks the
+  // pre-launch layout. iOS Safari ignores these flags for accessibility, so
+  // this only fully takes effect on Android / Chrome mobile.
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
   themeColor: "#FBF8F3",
   colorScheme: "light",
 };
@@ -117,7 +127,7 @@ function OrganizationJsonLd() {
     url: siteUrl,
     logo: `${siteUrl}/icon`,
     description:
-      "Hrvatska platforma za zero-fee crowdfunding podcasta — SEPA Instant + Monerium EURe.",
+      "Hrvatska onchain platforma za grupno financiranje bez naknada — SEPA Instant + Monerium EURe.",
     sameAs: ["https://github.com/pinka-finance"],
     contactPoint: [
       {

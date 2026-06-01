@@ -18,10 +18,10 @@ export function Footer() {
           <div className="max-w-md">
             <Logo variant="light" />
             <p className="mt-4 text-cream/70 leading-relaxed">
-              Doniraj podcastu jednim skenom. Bez naknada. U sekundi.
+              Prikupljaj sredstva jednim skenom. Bez naknada. U sekundi.
             </p>
             <p className="mt-2 text-sm text-cream/55">
-              Built on Monerium EURe, Safe & Gnosis Chain. Made in Croatia 🇭🇷.
+              Pokreće Monerium EURe, Safe i Gnosis Chain. Made in Croatia 🇭🇷.
             </p>
             <NewsletterForm />
           </div>
@@ -31,22 +31,22 @@ export function Footer() {
               title="Pinka"
               links={[
                 { label: "Kako radi", href: "#how" },
-                { label: "Built on", href: "#built-on" },
-                { label: "Roadmap", href: "#roadmap" },
-                { label: "FAQ", href: "#faq" },
+                { label: "Tehnologija", href: "#built-on" },
+                { label: "Plan razvoja", href: "#roadmap" },
+                { label: "Česta pitanja", href: "#faq" },
               ]}
             />
             <FooterCol
               title="Resursi"
               links={[
-                { label: "Privacy", href: "/privacy" },
-                { label: "Terms", href: "/terms" },
-                { label: "Security", href: "https://github.com/pinka-finance" },
+                { label: "Privatnost", href: "/privacy" },
+                { label: "Uvjeti", href: "/terms" },
+                { label: "Sigurnost", href: "https://github.com/pinka-finance" },
               ]}
             />
             <div>
               <p className="text-xs uppercase tracking-wider text-cream/55 font-medium">
-                Spojite se
+                Poveži se
               </p>
               <ul className="mt-4 space-y-3 text-sm">
                 <li>

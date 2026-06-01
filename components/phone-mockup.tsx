@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { CheckCircle2, ArrowUpRight, Headphones } from "lucide-react";
+import { CheckCircle2, ArrowUpRight, HandCoins } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Stage = "qr" | "confirm" | "done";
@@ -60,14 +60,14 @@ export function PhoneMockup({ className }: { className?: string }) {
 
           {/* Screen content */}
           <div className="absolute inset-x-0 top-7 bottom-0 flex flex-col">
-            {/* Podcast header */}
+            {/* Campaign header */}
             <div className="flex items-center gap-2.5 px-4 pt-4 pb-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-coral text-cream">
-                <Headphones className="h-4 w-4" aria-hidden />
+                <HandCoins className="h-4 w-4" aria-hidden />
               </div>
               <div className="min-w-0 leading-tight">
-                <div className="truncate text-[13px] font-semibold text-ink">Geek Krug</div>
-                <div className="truncate text-[10px] text-inkMuted">ep. 142 · Pinka u 5 min</div>
+                <div className="truncate text-[13px] font-semibold text-ink">Obnova igrališta</div>
+                <div className="truncate text-[10px] text-inkMuted">Crowdfunding · 3.240 € od 5.000 €</div>
               </div>
             </div>
 
@@ -101,7 +101,7 @@ function StageQR() {
     >
       <div className="text-center">
         <p className="text-[11px] font-medium uppercase tracking-wider text-coral-700">
-          Doniraj podcastu
+          Podrži kampanju
         </p>
         <p className="mt-1 text-[15px] font-medium text-ink leading-snug">
           Skeniraj u svojoj banci.
@@ -115,7 +115,7 @@ function StageQR() {
       </div>
 
       <div className="mt-3 text-center">
-        <p className="text-[11px] text-inkMuted">SEPA Instant · primatelj: Geek Krug</p>
+        <p className="text-[11px] text-inkMuted">SEPA Instant · primatelj: Obnova igrališta</p>
       </div>
     </motion.div>
   );
@@ -132,8 +132,8 @@ function StageConfirm() {
     >
       <div className="w-full rounded-md border border-ink/10 bg-white p-4 shadow-soft">
         <p className="text-[10px] uppercase tracking-wider text-inkMuted">U tvojoj banci</p>
-        <p className="mt-2 font-display text-2xl text-ink leading-none">5,00 €</p>
-        <p className="mt-1 text-[11px] text-inkMuted">Geek Krug · referenca PK-142</p>
+        <p className="mt-2 font-display text-2xl text-ink leading-none">20,00 €</p>
+        <p className="mt-1 text-[11px] text-inkMuted">Obnova igrališta · referenca PK-2048</p>
         <div className="mt-4 flex items-center gap-2 rounded-sm bg-sand px-3 py-2">
           <motion.span
             className="h-1.5 flex-1 rounded-full bg-coral/30 overflow-hidden relative"
@@ -170,7 +170,7 @@ function StageDone() {
       >
         <CheckCircle2 className="h-7 w-7" aria-hidden />
       </motion.div>
-      <p className="font-display text-xl text-ink leading-snug">5,00 € poslano</p>
+      <p className="font-display text-xl text-ink leading-snug">20,00 € poslano</p>
       <p className="mt-0.5 text-[11px] text-inkMuted">Stiglo u sekundi.</p>
       <div className="mt-3 inline-flex items-center gap-1 text-[11px] text-coral-700">
         <span>Vidi on-chain</span>

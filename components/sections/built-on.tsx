@@ -7,23 +7,23 @@ const partners = [
     icon: ShieldCheck,
     role: "Programabilni euro",
     body:
-      "Licencirana EU institucija elektroničkog novca. Izdaje EURe — regulirani euro on-chain pod MiCA. Sve uplate i isplate idu kroz reguliranu infrastrukturu.",
+      "Licencirana EU institucija za izdavanje elektroničkog novca. Izdaje EURe — regulirani euro on-chain pod okvirom MiCA. Sve uplate i isplate idu kroz reguliranu infrastrukturu.",
     href: "https://monerium.com",
   },
   {
     name: "Safe",
     icon: Lock,
-    role: "Treasury sigurnost",
+    role: "Sigurnost sredstava",
     body:
-      "Industry-standard multisig za upravljanje sredstvima. Ono što čuva milijarde u DeFi treasuriju — to čuva i sredstva korisnika pinke.",
+      "Industrijski standard za multisig upravljanje sredstvima. Ono što čuva milijarde u DeFi riznicama — to čuva i sredstva korisnika pinke.",
     href: "https://safe.global",
   },
   {
     name: "Gnosis Chain",
     icon: Network,
-    role: "Settlement layer",
+    role: "Sloj za namiru",
     body:
-      "Brz, jeftin EVM ekosistem optimiziran za stablecoin transakcije. EURe se kreće za sitne djeliće centa, u sekundi.",
+      "Brz i jeftin EVM ekosustav optimiziran za stablecoin transakcije. EURe se kreće za sitne djeliće centa, u sekundi.",
     href: "https://www.gnosis.io",
   },
 ];
@@ -49,8 +49,8 @@ export function BuiltOn() {
             Izgrađeno na ozbiljnoj infrastrukturi.
           </h2>
           <p className="mt-5 text-lg text-cream/75">
-            Ne gradimo iz nule. Stojimo na licenciranim, batle-tested protokolima koji već
-            pomiču milijarde eura kroz reguliranu mrežu.
+            Ne gradimo od nule. Stojimo na licenciranim, u praksi dokazanim protokolima koji
+            već pomiču milijarde eura kroz reguliranu mrežu.
           </p>
         </SectionReveal>
 

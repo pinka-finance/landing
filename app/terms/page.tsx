@@ -20,17 +20,17 @@ export default function TermsPage() {
 
           <Section title="Ovo je pre-launch stranica">
             <p>
-              pinka.finance je u pre-launch fazi. Ova stranica služi za informiranje, kupljenje
-              waitlist prijava i opisivanje budućeg proizvoda. Sve specifikacije, datumi i
-              uvjeti podložni su promjeni dok ne lansiramo punu uslugu.
+              pinka.finance je u pre-launch fazi. Ova stranica služi za informiranje,
+              prikupljanje prijava na listu čekanja i opisivanje budućeg proizvoda. Sve
+              specifikacije, datumi i uvjeti podložni su promjeni dok ne lansiramo punu uslugu.
             </p>
           </Section>
 
           <Section title="Bez financijskih savjeta">
             <p>
               Ništa na ovoj stranici nije financijski, porezni, pravni ili investicijski
-              savjet. Ne nudimo investicijske proizvode niti garantiramo prinose.
-              Donacije nisu ulaganja.
+              savjet. Ne nudimo investicijske proizvode niti jamčimo prinose. Doprinosi i
+              donacije nisu ulaganja.
             </p>
           </Section>
 

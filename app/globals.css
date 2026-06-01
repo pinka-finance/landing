@@ -17,6 +17,13 @@
   body {
     @apply bg-cream text-ink font-sans;
     font-feature-settings: "ss01", "cv11", "kern";
+    /* Guard against horizontal scroll from decorative, off-canvas elements
+       (gradient blobs, blurred shapes). `clip` clips the overflow without
+       creating a scroll container, so it doesn't break `position: sticky`
+       the way `overflow-x: hidden` would. `hidden` is a fallback for older
+       browsers that don't support `clip`. */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Respect prefers-reduced-motion. We disable smooth scroll here; framer-motion

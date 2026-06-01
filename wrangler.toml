@@ -1,0 +1,28 @@
+name = "pinka-finance-landing"
+main = "worker/index.js"
+compatibility_date = "2025-05-01"
+account_id = "7dc7167b7e2e00923bfa7cd697df14e4"
+
+# Serve the static Next.js export. Matching assets are served by the platform
+# without invoking the Worker; the Worker handles /api/* and any fallthrough.
+assets = { directory = "./out", binding = "ASSETS", not_found_handling = "404-page" }
+
+# Serve on the apex domain (attaches to the existing proxied DNS record).
+routes = [
+  { pattern = "pinka.finance/*", zone_name = "pinka.finance" }
+]
+
+# Waitlist + newsletter signups.
+[[d1_databases]]
+binding = "DB"
+database_name = "pinka-landing"
+database_id = "3064a3a4-4db1-48e9-a3bb-fb97dfa8a8d2"
+
+[observability]
+enabled = true
+
+# Optional transactional email via Resend — set as secrets:
+#   wrangler secret put RESEND_API_KEY
+#   wrangler secret put WAITLIST_NOTIFY_EMAIL
+# [vars]
+# RESEND_FROM = "pinka <hello@pinka.finance>"

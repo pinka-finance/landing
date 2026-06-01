@@ -18,7 +18,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 grain"
+      className="relative overflow-x-clip pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 grain"
       aria-labelledby="hero-heading"
     >
       {/* Decorative gradient blobs */}
@@ -46,7 +46,7 @@ export function Hero() {
               {...fade(0.05)}
               className="mt-5 text-display-xl text-ink"
             >
-              Doniraj podcastu{" "}
+              Prikupljaj sredstva{" "}
               <span className="gradient-text">jednim skenom.</span>
               <br />
               Bez naknada. U sekundi.
@@ -56,8 +56,9 @@ export function Hero() {
               {...fade(0.15)}
               className="mt-6 text-lg sm:text-xl text-inkSoft max-w-xl leading-relaxed"
             >
-              Pinka spaja SEPA Instant i programabilni euro tako da donatori daju, a kreatori
-              i organizacije primaju — bez kartičnih provizija, bez čekanja, bez kompromisa.
+              Pinka je onchain platforma za grupno financiranje. Spaja SEPA Instant i
+              programabilni euro pa podržavatelji uplate skenom, a kreatori, udruge i timovi
+              primaju sredstva izravno — bez kartičnih provizija, bez čekanja, bez kompromisa.
             </motion.p>
 
             <motion.div
@@ -67,7 +68,7 @@ export function Hero() {
               <WaitlistDialog source="primary">
                 <Button size="lg" className="w-full sm:w-auto">
                   <Zap className="h-4 w-4" aria-hidden />
-                  Pridruži se waitlist-u
+                  Pridruži se listi čekanja
                 </Button>
               </WaitlistDialog>
               <a

@@ -23,11 +23,11 @@ export function WaitlistDialog({ children, source = "modal", initialRole }: Prop
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-xl md:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Pridruži se waitlist-u.</DialogTitle>
+          <DialogTitle>Pridruži se listi čekanja.</DialogTitle>
           <DialogDescription>
-            Javit ćemo se kad lansiramo prvi pilot. Bez spamanja.
+            Javit ćemo se kad lansiramo prvi pilot. Bez spama.
           </DialogDescription>
         </DialogHeader>
         <div className="mt-2">

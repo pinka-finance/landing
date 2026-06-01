@@ -34,8 +34,8 @@ export function Navigation() {
         </a>
         <WaitlistDialog source="primary">
           <Button size="sm">
-            <span className="hidden sm:inline">Pridruži se waitlist-u</span>
-            <span className="sm:hidden">Waitlist</span>
+            <span className="hidden sm:inline">Pridruži se listi čekanja</span>
+            <span className="sm:hidden">Lista čekanja</span>
           </Button>
         </WaitlistDialog>
       </nav>
