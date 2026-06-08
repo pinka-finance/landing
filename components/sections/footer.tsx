@@ -8,46 +8,45 @@ import { Github, Twitter, Mail, Loader2, CheckCircle2, AlertCircle } from "lucid
 import { Logo } from "@/components/logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { newsletterSchema, type NewsletterInput } from "@/lib/waitlist-schema";
+import { makeNewsletterSchema, type NewsletterInput } from "@/lib/waitlist-schema";
+import { useI18n } from "@/lib/i18n";
 
 export function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="bg-ink text-cream/85">
       <div className="container-content py-16 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div className="max-w-md">
             <Logo variant="light" />
-            <p className="mt-4 text-cream/70 leading-relaxed">
-              Prikupljaj sredstva jednim skenom. Bez naknada. U sekundi.
-            </p>
-            <p className="mt-2 text-sm text-cream/55">
-              Pokreće Monerium EURe, Safe i Gnosis Chain. Made in Croatia 🇭🇷.
-            </p>
+            <p className="mt-4 text-cream/70 leading-relaxed">{t("footer.tagline")}</p>
+            <p className="mt-2 text-sm text-cream/55">{t("footer.poweredBy")}</p>
             <NewsletterForm />
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
             <FooterCol
-              title="Pinka"
+              title={t("footer.colProduct")}
               links={[
-                { label: "Kako radi", href: "#how" },
-                { label: "Nogomet", href: "#nogomet" },
-                { label: "Tehnologija", href: "#built-on" },
-                { label: "Plan razvoja", href: "#roadmap" },
-                { label: "Česta pitanja", href: "#faq" },
+                { label: t("footer.linkHow"), href: "#how" },
+                { label: t("footer.linkPodcast"), href: "#podcast" },
+                { label: t("footer.linkFootball"), href: "#nogomet" },
+                { label: t("footer.linkTech"), href: "#built-on" },
+                { label: t("footer.linkRoadmap"), href: "#roadmap" },
+                { label: t("footer.linkFaq"), href: "#faq" },
               ]}
             />
             <FooterCol
-              title="Resursi"
+              title={t("footer.colResources")}
               links={[
-                { label: "Privatnost", href: "/privacy" },
-                { label: "Uvjeti", href: "/terms" },
-                { label: "Sigurnost", href: "https://github.com/pinka-finance" },
+                { label: t("footer.linkPrivacy"), href: "/privacy" },
+                { label: t("footer.linkTerms"), href: "/terms" },
+                { label: t("footer.linkSecurity"), href: "https://github.com/pinka-finance" },
               ]}
             />
             <div>
               <p className="text-xs uppercase tracking-wider text-cream/55 font-medium">
-                Poveži se
+                {t("footer.colConnect")}
               </p>
               <ul className="mt-4 space-y-3 text-sm">
                 <li>
@@ -84,8 +83,8 @@ export function Footer() {
         </div>
 
         <div className="mt-14 border-t border-cream/10 pt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-cream/55">
-          <p>© {new Date().getFullYear()} pinka.finance — Made in Croatia 🇭🇷</p>
-          <p>Pinka je u pre-launch fazi. Sve specifikacije podložne su promjeni.</p>
+          <p>{t("footer.copyright", { year: new Date().getFullYear() })}</p>
+          <p>{t("footer.prelaunch")}</p>
         </div>
       </div>
     </footer>
@@ -119,6 +118,7 @@ function FooterCol({
 }
 
 function NewsletterForm() {
+  const { t } = useI18n();
   const [state, setState] = useState<
     | { status: "idle" }
     | { status: "submitting" }
@@ -127,7 +127,7 @@ function NewsletterForm() {
   >({ status: "idle" });
 
   const form = useForm<NewsletterInput>({
-    resolver: zodResolver(newsletterSchema),
+    resolver: zodResolver(makeNewsletterSchema(t)),
     mode: "onTouched",
   });
 
@@ -146,13 +146,13 @@ function NewsletterForm() {
       if (!res.ok || !json?.ok) {
         setState({
           status: "error",
-          message: (json && "error" in json && json.error) || "Pokušaj ponovno.",
+          message: (json && "error" in json && json.error) || t("footer.errorRetry"),
         });
         return;
       }
       setState({ status: "success" });
     } catch {
-      setState({ status: "error", message: "Mreža je trenutno nedostupna." });
+      setState({ status: "error", message: t("footer.errorNetwork") });
     }
   });
 
@@ -163,7 +163,7 @@ function NewsletterForm() {
         className="mt-8 inline-flex items-center gap-2 rounded-md border border-cream/20 bg-cream/[0.06] px-4 py-3 text-sm text-cream/90"
       >
         <CheckCircle2 className="h-4 w-4 text-forest" aria-hidden />
-        Hvala — javit ćemo se kad lansiramo.
+        {t("footer.newsletterSuccess")}
       </div>
     );
   }
@@ -171,14 +171,14 @@ function NewsletterForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="mt-8 max-w-md">
       <label htmlFor="newsletter-email" className="block text-xs uppercase tracking-wider text-cream/55 mb-2 font-medium">
-        Newsletter
+        {t("footer.newsletter")}
       </label>
       <div className="flex gap-2">
         <Input
           id="newsletter-email"
           type="email"
           inputMode="email"
-          placeholder="ti@primjer.hr"
+          placeholder={t("footer.emailPlaceholder")}
           autoComplete="email"
           invalid={!!form.formState.errors.email}
           className="bg-cream/[0.06] border-cream/15 text-cream placeholder:text-cream/40 focus:ring-cream/30 focus:border-cream/30"
@@ -188,7 +188,7 @@ function NewsletterForm() {
           {state.status === "submitting" ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
           ) : (
-            "Prijavi"
+            t("footer.subscribe")
           )}
         </Button>
       </div>

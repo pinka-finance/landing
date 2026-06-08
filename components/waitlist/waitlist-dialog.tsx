@@ -10,6 +10,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { WaitlistForm } from "@/components/waitlist/waitlist-form";
+import { useI18n } from "@/lib/i18n";
 import type { Role } from "@/lib/waitlist-schema";
 
 type Props = {
@@ -19,16 +20,15 @@ type Props = {
 };
 
 export function WaitlistDialog({ children, source = "modal", initialRole }: Props) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-xl md:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Pridruži se listi čekanja.</DialogTitle>
-          <DialogDescription>
-            Javit ćemo se kad lansiramo prvi pilot. Bez spama.
-          </DialogDescription>
+          <DialogTitle>{t("dialog.title")}</DialogTitle>
+          <DialogDescription>{t("dialog.description")}</DialogDescription>
         </DialogHeader>
         <div className="mt-2">
           <WaitlistForm source={source} initialRole={initialRole} compact />

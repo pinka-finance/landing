@@ -1,40 +1,33 @@
+"use client";
+
 import { SectionReveal } from "@/components/section-reveal";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
-const milestones = [
-  {
-    quarter: "Q3 2026",
-    title: "Pilot s prvih 5 nogometnih klubova",
-    body: "Odabrana skupina amaterskih klubova. Svaki uvodimo ručno i slušamo svaku povratnu informaciju.",
-    state: "next" as const,
-  },
-  {
-    quarter: "Q4 2026",
-    title: "Otvorene registracije",
-    body: "Samostalna registracija za sve kreatore, udruge i timove u SEPA zoni.",
-    state: "future" as const,
-  },
-  {
-    quarter: "Q1 2027",
-    title: "Javni API",
-    body: "Platforme i organizacije integriraju pinku izravno u svoje tijekove rada.",
-    state: "future" as const,
-  },
-  {
-    quarter: "Q2 2027",
-    title: "Prekogranične SEPA uplate",
-    body: "Podržavatelji iz cijele EU i EEA — bez tečajnih razlika, bez prepreka.",
-    state: "future" as const,
-  },
-  {
-    quarter: "Dalje",
-    title: "Više valuta i mobilna aplikacija",
-    body: "GBP, USD te izvorna iOS/Android aplikacija. Plan razvoja koji prati zajednica.",
-    state: "future" as const,
-  },
+type MilestoneData = {
+  quarter: string;
+  title: string;
+  body: string;
+  state: "next" | "future";
+};
+
+const milestoneKeys = [
+  { key: "pilot", state: "next" as const },
+  { key: "open", state: "future" as const },
+  { key: "api", state: "future" as const },
+  { key: "crossborder", state: "future" as const },
+  { key: "beyond", state: "future" as const },
 ];
 
 export function Roadmap() {
+  const { t } = useI18n();
+  const milestones: MilestoneData[] = milestoneKeys.map((m) => ({
+    quarter: t(`roadmap.items.${m.key}.q`),
+    title: t(`roadmap.items.${m.key}.title`),
+    body: t(`roadmap.items.${m.key}.body`),
+    state: m.state,
+  }));
+
   return (
     <section
       id="roadmap"
@@ -43,14 +36,11 @@ export function Roadmap() {
     >
       <div className="container-content">
         <SectionReveal className="max-w-3xl">
-          <span className="eyebrow">Plan razvoja</span>
+          <span className="eyebrow">{t("roadmap.eyebrow")}</span>
           <h2 id="roadmap-heading" className="mt-4 text-display-lg">
-            Što slijedi.
+            {t("roadmap.heading")}
           </h2>
-          <p className="mt-5 text-lg text-inkSoft">
-            Krećemo malo i lokalno. Skaliramo kad korisnici kažu da je vrijeme — ne kad
-            tablica kaže da je vrijeme.
-          </p>
+          <p className="mt-5 text-lg text-inkSoft">{t("roadmap.intro")}</p>
         </SectionReveal>
 
         {/* Desktop horizontal timeline */}
@@ -104,7 +94,7 @@ function Milestone({
   title,
   body,
   state,
-}: (typeof milestones)[number]) {
+}: MilestoneData) {
   return (
     <li className="relative">
       <span

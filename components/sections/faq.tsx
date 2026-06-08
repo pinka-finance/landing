@@ -7,120 +7,64 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { SectionReveal } from "@/components/section-reveal";
-
-const faqs: { q: string; a: React.ReactNode }[] = [
-  {
-    q: "Trebam li kripto novčanik kao podržavatelj?",
-    a: (
-      <>
-        Ne. Plaćaš preko svoje banke ili Revoluta kao bilo koju SEPA uplatu. Nema novih
-        računa, nema novih aplikacija, nema priča o „seed phraseu“.
-      </>
-    ),
-  },
-  {
-    q: "Koje vrste kampanja mogu pokrenuti?",
-    a: (
-      <>
-        Donacije, crowdfunding s ciljanim iznosom, prodaju ulaznica, soft tokenizaciju
-        (on-chain potvrdu doprinosa — bez vrijednosnih papira i dividendi) te grupno
-        financiranje nekretnina. Tip biraš pri pokretanju kampanje.
-      </>
-    ),
-  },
-  {
-    q: "Je li pinka regulirana?",
-    a: (
-      <>
-        Pinka surađuje s{" "}
-        <a
-          href="https://monerium.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-coral underline-offset-2 hover:underline"
-        >
-          Moneriumom
-        </a>
-        , licenciranom EU institucijom za izdavanje elektroničkog novca pod okvirom MiCA. Sve
-        uplate i isplate prolaze kroz reguliranu infrastrukturu.
-      </>
-    ),
-  },
-  {
-    q: "Koliko košta?",
-    a: (
-      <>
-        0 % obavezno. Podržavatelj može neobavezno dodati napojnicu platformi (slično modelu
-        Zeffyja). Kreatori, udruge i timovi ne plaćaju ništa.
-      </>
-    ),
-  },
-  {
-    q: "Kakvi porezi vrijede za primatelje?",
-    a: (
-      <>
-        Standardni porezi za zemlju primatelja. Pinka generira potvrde i izvještaje za
-        računovodstvo — onaj papir koji tvoj knjigovođa stvarno traži.
-      </>
-    ),
-  },
-  {
-    q: "Što ako organizator ne podigne sredstva odmah?",
-    a: (
-      <>
-        Sredstva sigurno stoje on-chain pod multisig kontrolom (Safe). Mogu se podići kad god
-        organizator bude spreman — sutra, za mjesec ili za godinu. Ništa ne istječe.
-      </>
-    ),
-  },
-  {
-    q: "Koje države podržavate?",
-    a: (
-      <>
-        V1 je prvenstveno za EU/EEA SEPA zonu (uključujući Hrvatsku). Prekogranične uplate
-        diljem cijele EU u planu su razvoja — Q2 2027.
-      </>
-    ),
-  },
-  {
-    q: "Tko stoji iza projekta?",
-    a: (
-      <>
-        Mali tim iz Zagreba, članovi UBIK-a (Hrvatske udruge za blockchain i kriptovalute).
-        Kontakt:{" "}
-        <a
-          href="mailto:hello@pinka.finance"
-          className="text-coral underline-offset-2 hover:underline"
-        >
-          hello@pinka.finance
-        </a>
-        .
-      </>
-    ),
-  },
-  {
-    q: "Kad lansirate?",
-    a: (
-      <>
-        Q3 2026 — prvi pilot s odabranom skupinom od 5 kampanja. Otvorene registracije
-        slijede u Q4.
-        <a href="#waitlist" className="text-coral underline-offset-2 hover:underline ml-1">
-          Pridruži se listi čekanja
-        </a>{" "}
-        za rani pristup.
-      </>
-    ),
-  },
-];
+import { useI18n } from "@/lib/i18n";
 
 export function FAQ() {
+  const { t } = useI18n();
+
+  const link = "text-coral underline-offset-2 hover:underline";
+  const faqs: { q: string; a: React.ReactNode }[] = [
+    { q: t("faq.wallet.q"), a: t("faq.wallet.a") },
+    { q: t("faq.types.q"), a: t("faq.types.a") },
+    {
+      q: t("faq.regulated.q"),
+      a: (
+        <>
+          {t("faq.regulated.a1")}
+          <a href="https://monerium.com" target="_blank" rel="noopener noreferrer" className={link}>
+            {t("faq.regulated.link")}
+          </a>
+          {t("faq.regulated.a2")}
+        </>
+      ),
+    },
+    { q: t("faq.cost.q"), a: t("faq.cost.a") },
+    { q: t("faq.taxes.q"), a: t("faq.taxes.a") },
+    { q: t("faq.custody.q"), a: t("faq.custody.a") },
+    { q: t("faq.countries.q"), a: t("faq.countries.a") },
+    {
+      q: t("faq.who.q"),
+      a: (
+        <>
+          {t("faq.who.a")}
+          <a href="mailto:hello@pinka.finance" className={link}>
+            hello@pinka.finance
+          </a>
+          .
+        </>
+      ),
+    },
+    {
+      q: t("faq.launch.q"),
+      a: (
+        <>
+          {t("faq.launch.a1")}
+          <a href="#waitlist" className={link}>
+            {t("faq.launch.link")}
+          </a>
+          {t("faq.launch.a2")}
+        </>
+      ),
+    },
+  ];
+
   return (
     <section id="faq" className="section-padding bg-cream" aria-labelledby="faq-heading">
       <div className="container-content max-w-3xl">
         <SectionReveal>
-          <span className="eyebrow">Česta pitanja</span>
+          <span className="eyebrow">{t("faq.eyebrow")}</span>
           <h2 id="faq-heading" className="mt-4 text-display-lg">
-            Brza pitanja, kratki odgovori.
+            {t("faq.heading")}
           </h2>
         </SectionReveal>
 

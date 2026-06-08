@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { CheckCircle2, ArrowUpRight, HandCoins } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
 type Stage = "qr" | "confirm" | "done";
 
@@ -23,6 +24,7 @@ export function PhoneMockup({ className }: { className?: string }) {
   // useReducedMotion only used here to halt the looping demo timer for users
   // with the OS opt-out — framer-motion itself collapses durations via
   // MotionProvider, but a perpetual setTimeout chain would still flicker.
+  const { t } = useI18n();
   const reduce = useReducedMotion();
   const [stage, setStage] = useState<Stage>("qr");
 
@@ -66,8 +68,8 @@ export function PhoneMockup({ className }: { className?: string }) {
                 <HandCoins className="h-4 w-4" aria-hidden />
               </div>
               <div className="min-w-0 leading-tight">
-                <div className="truncate text-[13px] font-semibold text-ink">Obnova igrališta</div>
-                <div className="truncate text-[10px] text-inkMuted">Crowdfunding · 3.240 € od 5.000 €</div>
+                <div className="truncate text-[13px] font-semibold text-ink">{t("mockup.campaignTitle")}</div>
+                <div className="truncate text-[10px] text-inkMuted">{t("mockup.campaignMeta")}</div>
               </div>
             </div>
 
@@ -91,6 +93,7 @@ export function PhoneMockup({ className }: { className?: string }) {
 const transition = { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const };
 
 function StageQR() {
+  const { t } = useI18n();
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -101,10 +104,10 @@ function StageQR() {
     >
       <div className="text-center">
         <p className="text-[11px] font-medium uppercase tracking-wider text-coral-700">
-          Podrži kampanju
+          {t("mockup.support")}
         </p>
         <p className="mt-1 text-[15px] font-medium text-ink leading-snug">
-          Skeniraj u svojoj banci.
+          {t("mockup.scanInBank")}
         </p>
       </div>
 
@@ -115,13 +118,14 @@ function StageQR() {
       </div>
 
       <div className="mt-3 text-center">
-        <p className="text-[11px] text-inkMuted">SEPA Instant · primatelj: Obnova igrališta</p>
+        <p className="text-[11px] text-inkMuted">{t("mockup.recipientLine")}</p>
       </div>
     </motion.div>
   );
 }
 
 function StageConfirm() {
+  const { t } = useI18n();
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -131,9 +135,9 @@ function StageConfirm() {
       className="flex h-full flex-col items-center justify-center"
     >
       <div className="w-full rounded-md border border-ink/10 bg-white p-4 shadow-soft">
-        <p className="text-[10px] uppercase tracking-wider text-inkMuted">U tvojoj banci</p>
-        <p className="mt-2 font-display text-2xl text-ink leading-none">20,00 €</p>
-        <p className="mt-1 text-[11px] text-inkMuted">Obnova igrališta · referenca PK-2048</p>
+        <p className="text-[10px] uppercase tracking-wider text-inkMuted">{t("mockup.inYourBank")}</p>
+        <p className="mt-2 font-display text-2xl text-ink leading-none">{t("mockup.amount")}</p>
+        <p className="mt-1 text-[11px] text-inkMuted">{t("mockup.reference")}</p>
         <div className="mt-4 flex items-center gap-2 rounded-sm bg-sand px-3 py-2">
           <motion.span
             className="h-1.5 flex-1 rounded-full bg-coral/30 overflow-hidden relative"
@@ -154,6 +158,7 @@ function StageConfirm() {
 }
 
 function StageDone() {
+  const { t } = useI18n();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96 }}
@@ -170,10 +175,10 @@ function StageDone() {
       >
         <CheckCircle2 className="h-7 w-7" aria-hidden />
       </motion.div>
-      <p className="font-display text-xl text-ink leading-snug">20,00 € poslano</p>
-      <p className="mt-0.5 text-[11px] text-inkMuted">Stiglo u sekundi.</p>
+      <p className="font-display text-xl text-ink leading-snug">{t("mockup.sent")}</p>
+      <p className="mt-0.5 text-[11px] text-inkMuted">{t("mockup.arrived")}</p>
       <div className="mt-3 inline-flex items-center gap-1 text-[11px] text-coral-700">
-        <span>Vidi on-chain</span>
+        <span>{t("mockup.viewOnchain")}</span>
         <ArrowUpRight className="h-3 w-3" aria-hidden />
       </div>
     </motion.div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
@@ -28,44 +28,20 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 import {
-  waitlistSchema,
+  makeWaitlistSchema,
   type WaitlistInput,
   type Role,
   ORG_TYPES,
   INVEST_TYPES,
 } from "@/lib/waitlist-schema";
 
-const ROLE_OPTIONS: {
-  value: Role;
-  label: string;
-  description: string;
-  icon: LucideIcon;
-}[] = [
-  {
-    value: "donor",
-    label: "Podržavatelj",
-    description: "Želim podržavati kampanje, projekte i organizacije.",
-    icon: HandCoins,
-  },
-  {
-    value: "creator",
-    label: "Klub / udruga / kreator",
-    description: "Pokrećem kampanju i primam sredstva (npr. nogometni klub).",
-    icon: Megaphone,
-  },
-  {
-    value: "investor",
-    label: "Investitor / Partner",
-    description: "Pratim projekt iz fonda ili partnerstva.",
-    icon: Briefcase,
-  },
-  {
-    value: "media",
-    label: "Medij / Community",
-    description: "Pišem o projektu ili pokrivam scenu.",
-    icon: Newspaper,
-  },
+const ROLE_OPTIONS: { value: Role; icon: LucideIcon }[] = [
+  { value: "donor", icon: HandCoins },
+  { value: "creator", icon: Megaphone },
+  { value: "investor", icon: Briefcase },
+  { value: "media", icon: Newspaper },
 ];
 
 type Props = {
@@ -76,6 +52,7 @@ type Props = {
 };
 
 export function WaitlistForm({ source = "primary", onSuccess, compact, initialRole }: Props) {
+  const { t, locale } = useI18n();
   const [submitState, setSubmitState] = useState<
     | { status: "idle" }
     | { status: "submitting" }
@@ -83,8 +60,10 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
     | { status: "error"; message: string }
   >({ status: "idle" });
 
+  const schema = useMemo(() => makeWaitlistSchema(t), [locale]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const form = useForm<WaitlistInput>({
-    resolver: zodResolver(waitlistSchema),
+    resolver: zodResolver(schema),
     mode: "onTouched",
     defaultValues: {
       role: initialRole,
@@ -113,7 +92,7 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
         | null;
       if (!res.ok || !json?.ok) {
         const message =
-          (json && "error" in json && json.error) || "Nešto je pošlo po krivu. Pokušaj ponovno.";
+          (json && "error" in json && json.error) || t("form.errorGeneric");
         setSubmitState({ status: "error", message });
         return;
       }
@@ -122,7 +101,7 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
     } catch {
       setSubmitState({
         status: "error",
-        message: "Mreža trenutno ne radi. Pokušaj ponovno za par sekundi.",
+        message: t("form.errorNetwork"),
       });
     }
   });
@@ -147,7 +126,7 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
       {/* Step 1: Role picker */}
       <fieldset className={cn(compact && "md:self-start")}>
         <legend className="block text-sm font-medium text-ink mb-2.5">
-          Tko si?
+          {t("form.legend")}
         </legend>
         <Controller
           control={form.control}
@@ -196,9 +175,11 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
                       <Icon className="h-4 w-4" aria-hidden />
                     </span>
                     <span className="min-w-0">
-                      <span className="block text-sm font-medium text-ink">{opt.label}</span>
+                      <span className="block text-sm font-medium text-ink">
+                        {t(`form.roles.${opt.value}.label`)}
+                      </span>
                       <span className="block text-xs text-inkMuted mt-0.5 leading-snug">
-                        {opt.description}
+                        {t(`form.roles.${opt.value}.description`)}
                       </span>
                     </span>
                   </button>
@@ -209,7 +190,7 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
         />
         {errors.role && (
           <p className="form-error" role="alert">
-            <AlertCircle className="h-3.5 w-3.5" aria-hidden /> Odaberi jednu opciju.
+            <AlertCircle className="h-3.5 w-3.5" aria-hidden /> {t("form.roleError")}
           </p>
         )}
       </fieldset>
@@ -220,15 +201,15 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="email">
-            Email <span className="text-coral" aria-hidden>*</span>
-            <span className="sr-only">obavezno</span>
+            {t("form.emailLabel")} <span className="text-coral" aria-hidden>*</span>
+            <span className="sr-only">{t("form.required")}</span>
           </Label>
           <Input
             id="email"
             type="email"
             inputMode="email"
             autoComplete="email"
-            placeholder="ti@primjer.hr"
+            placeholder={t("form.emailPlaceholder")}
             invalid={!!errors.email}
             {...form.register("email")}
           />
@@ -240,12 +221,12 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
           )}
         </div>
         <div>
-          <Label htmlFor="name">Ime</Label>
+          <Label htmlFor="name">{t("form.nameLabel")}</Label>
           <Input
             id="name"
             type="text"
             autoComplete="name"
-            placeholder="Marin"
+            placeholder={t("form.namePlaceholder")}
             {...form.register("name")}
           />
         </div>
@@ -280,10 +261,10 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
           {submitState.status === "submitting" ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-              Spremam…
+              {t("form.submitting")}
             </>
           ) : (
-            "Pridruži se listi čekanja"
+            t("form.submit")
           )}
         </Button>
 
@@ -298,9 +279,9 @@ export function WaitlistForm({ source = "primary", onSuccess, compact, initialRo
         )}
 
         <p className="text-xs text-inkMuted leading-relaxed">
-          Tvoji podaci ostaju kod nas. Ne dijelimo ih, ne prodajemo i ne šaljemo spam.{" "}
+          {t("form.privacyNote")}
           <a href="/privacy" className="underline underline-offset-2 hover:text-ink">
-            Pravila privatnosti
+            {t("form.privacyLink")}
           </a>
           .
         </p>
@@ -325,27 +306,29 @@ function FieldError({ message }: { message?: string }) {
 }
 
 function DonorFields({ form }: { form: FormCtx }) {
+  const { t } = useI18n();
   return (
     <div>
-      <Label htmlFor="interests">Što bi želio podržati?</Label>
+      <Label htmlFor="interests">{t("form.donor.interestsLabel")}</Label>
       <Textarea
         id="interests"
-        placeholder="npr. lokalne udruge, kreatori, projekti, klubovi…"
+        placeholder={t("form.donor.interestsPlaceholder")}
         {...form.register("interests")}
       />
-      <p className="mt-1 text-xs text-inkMuted">Neobavezno — pomaže nam odrediti prioritete pilota.</p>
+      <p className="mt-1 text-xs text-inkMuted">{t("form.donor.interestsHint")}</p>
     </div>
   );
 }
 
 function CreatorFields({ form }: { form: FormCtx }) {
+  const { t } = useI18n();
   const errors = form.formState.errors;
   return (
     <>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="orgName">
-            Naziv kampanje / organizacije <span className="text-coral" aria-hidden>*</span>
+            {t("form.creator.orgNameLabel")} <span className="text-coral" aria-hidden>*</span>
           </Label>
           <Input
             id="orgName"
@@ -356,12 +339,12 @@ function CreatorFields({ form }: { form: FormCtx }) {
         </div>
         <div>
           <Label htmlFor="link">
-            Web ili social <span className="text-coral" aria-hidden>*</span>
+            {t("form.creator.linkLabel")} <span className="text-coral" aria-hidden>*</span>
           </Label>
           <Input
             id="link"
             inputMode="url"
-            placeholder="https://… ili @handle"
+            placeholder={t("form.creator.linkPlaceholder")}
             invalid={!!("link" in errors && errors.link)}
             {...form.register("link")}
           />
@@ -370,16 +353,16 @@ function CreatorFields({ form }: { form: FormCtx }) {
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="audienceSize">Veličina zajednice</Label>
+          <Label htmlFor="audienceSize">{t("form.creator.audienceLabel")}</Label>
           <Input
             id="audienceSize"
-            placeholder="npr. ~3.000 pratitelja / članova"
+            placeholder={t("form.creator.audiencePlaceholder")}
             {...form.register("audienceSize")}
           />
         </div>
         <div>
           <Label htmlFor="orgType">
-            Vrsta <span className="text-coral" aria-hidden>*</span>
+            {t("form.creator.typeLabel")} <span className="text-coral" aria-hidden>*</span>
           </Label>
           <Controller
             control={form.control}
@@ -390,18 +373,18 @@ function CreatorFields({ form }: { form: FormCtx }) {
                   id="orgType"
                   invalid={!!("orgType" in errors && errors.orgType)}
                 >
-                  <SelectValue placeholder="Odaberi…" />
+                  <SelectValue placeholder={t("form.creator.typePlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {ORG_TYPES.map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {t === "kreator"
-                        ? "Kreator / individualac"
-                        : t === "neprofit"
-                        ? "Neprofitna organizacija"
-                        : t === "firma"
-                        ? "Firma"
-                        : "Drugo"}
+                  {ORG_TYPES.map((ot) => (
+                    <SelectItem key={ot} value={ot}>
+                      {ot === "kreator"
+                        ? t("form.creator.typeKreator")
+                        : ot === "neprofit"
+                        ? t("form.creator.typeNeprofit")
+                        : ot === "firma"
+                        ? t("form.creator.typeFirma")
+                        : t("form.creator.typeDrugo")}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -416,13 +399,14 @@ function CreatorFields({ form }: { form: FormCtx }) {
 }
 
 function InvestorFields({ form }: { form: FormCtx }) {
+  const { t } = useI18n();
   const errors = form.formState.errors;
   return (
     <>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="fundName">
-            Naziv fonda / firme <span className="text-coral" aria-hidden>*</span>
+            {t("form.investor.fundNameLabel")} <span className="text-coral" aria-hidden>*</span>
           </Label>
           <Input
             id="fundName"
@@ -433,12 +417,12 @@ function InvestorFields({ form }: { form: FormCtx }) {
         </div>
         <div>
           <Label htmlFor="fundLink">
-            Web <span className="text-coral" aria-hidden>*</span>
+            {t("form.investor.fundLinkLabel")} <span className="text-coral" aria-hidden>*</span>
           </Label>
           <Input
             id="fundLink"
             inputMode="url"
-            placeholder="https://…"
+            placeholder={t("form.investor.fundLinkPlaceholder")}
             invalid={!!("fundLink" in errors && errors.fundLink)}
             {...form.register("fundLink")}
           />
@@ -447,7 +431,7 @@ function InvestorFields({ form }: { form: FormCtx }) {
       </div>
       <div>
         <Label>
-          Tip ulaganja / suradnje <span className="text-coral" aria-hidden>*</span>
+          {t("form.investor.typesLabel")} <span className="text-coral" aria-hidden>*</span>
         </Label>
         <Controller
           control={form.control}
@@ -491,12 +475,13 @@ function InvestorFields({ form }: { form: FormCtx }) {
 }
 
 function MediaFields({ form }: { form: FormCtx }) {
+  const { t } = useI18n();
   const errors = form.formState.errors;
   return (
     <>
       <div>
         <Label htmlFor="publication">
-          Naziv publikacije <span className="text-coral" aria-hidden>*</span>
+          {t("form.media.publicationLabel")} <span className="text-coral" aria-hidden>*</span>
         </Label>
         <Input
           id="publication"
@@ -508,10 +493,10 @@ function MediaFields({ form }: { form: FormCtx }) {
         />
       </div>
       <div>
-        <Label htmlFor="coverageType">Tip pokrivanja</Label>
+        <Label htmlFor="coverageType">{t("form.media.coverageLabel")}</Label>
         <Textarea
           id="coverageType"
-          placeholder="npr. članak, intervju, spomen u newsletteru…"
+          placeholder={t("form.media.coveragePlaceholder")}
           {...form.register("coverageType")}
         />
       </div>
@@ -526,6 +511,7 @@ function SuccessState({
   email: string;
   compact?: boolean;
 }) {
+  const { t } = useI18n();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.97 }}
@@ -540,10 +526,11 @@ function SuccessState({
       <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-forest text-cream">
         <CheckCircle2 className="h-6 w-6" aria-hidden />
       </div>
-      <h3 className="font-display text-2xl text-ink mb-1">Pridružio si se. ✓</h3>
-      <p className="text-inkSoft text-sm sm:text-base">
-        Poslali smo potvrdu na <strong className="text-ink">{email}</strong>. Vidimo se na
-        lansiranju.
+      <h3 className="font-display text-2xl text-ink mb-1">{t("form.successTitle")}</h3>
+      <p className="text-inkSoft text-sm sm:text-base [&_strong]:text-ink">
+        {t("form.successBody", { email }).split(email)[0]}
+        <strong>{email}</strong>
+        {t("form.successBody", { email }).split(email)[1]}
       </p>
     </motion.div>
   );

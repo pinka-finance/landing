@@ -140,10 +140,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
 - 📧 [hello@pinka.finance](mailto:hello@pinka.finance) — general inquiries
 - 🔒 [security@pinka.finance](mailto:security@pinka.finance) — security disclosures (see [SECURITY.md](./SECURITY.md))
 
-## Community
-
-We're members of [UBIK](https://ubik.hr) — Croatian Association for Blockchain and Cryptocurrencies.
-
 ## License
 
 MIT — see [LICENSE](./LICENSE).

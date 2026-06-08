@@ -1,7 +1,11 @@
+"use client";
+
 import { SectionReveal } from "@/components/section-reveal";
 import { WaitlistForm } from "@/components/waitlist/waitlist-form";
+import { useI18n } from "@/lib/i18n";
 
 export function WaitlistSection() {
+  const { t } = useI18n();
   return (
     <section
       id="waitlist"
@@ -16,18 +20,17 @@ export function WaitlistSection() {
       <div className="container-content relative">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start">
           <SectionReveal className="max-w-xl lg:sticky lg:top-32">
-            <span className="eyebrow">Lista čekanja</span>
+            <span className="eyebrow">{t("waitlistSection.eyebrow")}</span>
             <h2 id="waitlist-heading" className="mt-4 text-display-lg">
-              Pridruži se prvom valu.
+              {t("waitlistSection.heading")}
             </h2>
             <p className="mt-5 text-lg text-inkSoft leading-relaxed">
-              Pišemo svima koji se prijave čim budemo spremni. Najprije odabranoj skupini od
-              pet kampanja, a zatim svima u SEPA zoni.
+              {t("waitlistSection.intro")}
             </p>
             <ul className="mt-8 space-y-3 text-base text-inkSoft">
-              <BulletItem>Bez spama. Najviše jedan e-mail po lansiranju.</BulletItem>
-              <BulletItem>Pilot pristup za prvih 5 kampanja i organizacija.</BulletItem>
-              <BulletItem>Izravan kontakt s timom za sva pitanja.</BulletItem>
+              <BulletItem>{t("waitlistSection.bullet1")}</BulletItem>
+              <BulletItem>{t("waitlistSection.bullet2")}</BulletItem>
+              <BulletItem>{t("waitlistSection.bullet3")}</BulletItem>
             </ul>
           </SectionReveal>
 

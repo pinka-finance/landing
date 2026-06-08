@@ -124,7 +124,7 @@ function confirmationEmail(name) {
     <p style="font-size:16px;line-height:1.6;color:#3A3A3A;margin:0 0 16px;">Pinka je onchain platforma za grupno financiranje — spaja SEPA Instant i Monerium EURe pa podržavatelji uplate skenom, a kreatori, udruge i timovi primaju sredstva izravno, bez kartičnih provizija i bez čekanja.</p>
     <p style="font-size:16px;line-height:1.6;color:#3A3A3A;margin:0 0 24px;">U međuvremenu, ako imaš pitanja ili ideje, samo odgovori na ovaj e-mail.</p>
     <hr style="border:none;border-top:1px solid rgba(26,26,26,0.12);margin:32px 0;" />
-    <p style="font-size:13px;line-height:1.5;color:#6B6B6B;margin:0;">pinka.finance · Made in Croatia 🇭🇷 · Članovi UBIK-a</p>
+    <p style="font-size:13px;line-height:1.5;color:#6B6B6B;margin:0;">pinka.finance · Made in Croatia 🇭🇷</p>
   </div></body></html>`;
 }
 

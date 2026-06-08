@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/hero";
 import { Problem } from "@/components/sections/problem";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { Football } from "@/components/sections/football";
+import { Podcast } from "@/components/sections/podcast";
 import { BuiltOn } from "@/components/sections/built-on";
 import { Transparency } from "@/components/sections/transparency";
 import { Roadmap } from "@/components/sections/roadmap";
@@ -19,6 +20,7 @@ export default function HomePage() {
         <Hero />
         <Problem />
         <HowItWorks />
+        <Podcast />
         <Football />
         <BuiltOn />
         <Transparency />

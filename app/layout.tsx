@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import { MotionProvider } from "@/components/motion-provider";
+import { I18nProvider } from "@/lib/i18n";
+import { SeoSync } from "@/components/seo-sync";
+import { SkipLink } from "@/components/skip-link";
 import "./globals.css";
 
 const inter = Inter({
@@ -105,14 +108,12 @@ export default function RootLayout({
   return (
     <html lang="hr" className={`${inter.variable} ${fraunces.variable}`}>
       <body>
-        {/* Skip link for keyboard users */}
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-cream focus:no-underline"
-        >
-          Preskoči na sadržaj
-        </a>
-        <MotionProvider>{children}</MotionProvider>
+        <I18nProvider>
+          {/* Skip link for keyboard users */}
+          <SkipLink />
+          <SeoSync />
+          <MotionProvider>{children}</MotionProvider>
+        </I18nProvider>
         <OrganizationJsonLd />
       </body>
     </html>

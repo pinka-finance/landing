@@ -3,15 +3,17 @@
 import { motion } from "framer-motion";
 import { SectionReveal } from "@/components/section-reveal";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
 const platforms = [
-  { name: "Pinka", percent: 100, accent: "coral", note: "0 % obavezno · neobavezna napojnica" },
-  { name: "Stripe + ručno", percent: 96.5, accent: "neutral", note: "~2,9 % + 0,30 € po transakciji" },
-  { name: "Patreon", percent: 91, accent: "neutral", note: "5–12 % provizije + obrada plaćanja" },
-  { name: "GoFundMe", percent: 87, accent: "neutral", note: "provizija + poticaji na napojnicu" },
-];
+  { key: "pinka", percent: 100, accent: "coral" },
+  { key: "stripe", percent: 96.5, accent: "neutral" },
+  { key: "patreon", percent: 91, accent: "neutral" },
+  { key: "gofundme", percent: 87, accent: "neutral" },
+] as const;
 
 export function Transparency() {
+  const { t } = useI18n();
   return (
     <section
       id="transparency"
@@ -21,23 +23,17 @@ export function Transparency() {
       <div className="container-content">
         <div className="grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-start">
           <SectionReveal className="max-w-xl">
-            <span className="eyebrow">Transparentnost</span>
+            <span className="eyebrow">{t("transparency.eyebrow")}</span>
             <h2 id="transparency-heading" className="mt-4 text-display-lg">
-              Bez skrivenih naknada. Evo kako se uzdržavamo.
+              {t("transparency.heading")}
             </h2>
             <div className="mt-6 space-y-5 text-lg text-inkSoft leading-relaxed">
-              <p>
-                Pinka ne uzima proviziju na prikupljena sredstva. Pri uplati podržavatelj može
-                neobavezno dodati malu napojnicu platformi — te napojnice nas održavaju.
-              </p>
-              <p>
-                Naša riznica je javna on-chain (poveznica kad bude aktivna) i koristimo je za
-                razvoj platforme te za prinos kroz regulirane DeFi protokole.
-              </p>
+              <p>{t("transparency.p1")}</p>
+              <p>{t("transparency.p2")}</p>
               <p className="font-display text-xl text-ink">
-                100 % sredstava ide organizatoru kampanje.
+                {t("transparency.closerA")}
                 <br />
-                100 % transparentno. 0 % iznenađenja.
+                {t("transparency.closerB")}
               </p>
             </div>
           </SectionReveal>
@@ -45,11 +41,11 @@ export function Transparency() {
           <SectionReveal delay={0.1}>
             <div className="rounded-lg border border-ink/8 bg-white/80 p-6 sm:p-8">
               <p className="text-xs uppercase tracking-wider text-inkMuted">
-                Koliko od 100 € uplate stigne organizatoru
+                {t("transparency.chartTitle")}
               </p>
               <ul className="mt-5 space-y-4">
                 {platforms.map((p, i) => (
-                  <li key={p.name}>
+                  <li key={p.key}>
                     <div className="flex items-baseline justify-between mb-1.5">
                       <span
                         className={cn(
@@ -57,7 +53,7 @@ export function Transparency() {
                           p.accent === "coral" ? "text-coral" : "text-ink"
                         )}
                       >
-                        {p.name}
+                        {t(`transparency.rows.${p.key}.name`)}
                       </span>
                       <span
                         className={cn(
@@ -82,13 +78,14 @@ export function Transparency() {
                         )}
                       />
                     </div>
-                    <p className="mt-1.5 text-xs text-inkMuted">{p.note}</p>
+                    <p className="mt-1.5 text-xs text-inkMuted">
+                      {t(`transparency.rows.${p.key}.note`)}
+                    </p>
                   </li>
                 ))}
               </ul>
               <p className="mt-6 text-xs text-inkMuted leading-relaxed">
-                Procjene; stvarni iznosi variraju ovisno o regiji, planu i vrsti kartice.
-                Pinkin postotak ne uključuje neobavezne napojnice koje podržavatelj sam bira.
+                {t("transparency.disclaimer")}
               </p>
             </div>
           </SectionReveal>

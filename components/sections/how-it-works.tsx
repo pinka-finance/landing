@@ -9,55 +9,40 @@ import {
   Share2,
   TrendingUp,
   Wallet,
+  type LucideIcon,
 } from "lucide-react";
 import { SectionReveal } from "@/components/section-reveal";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
-const supporterSteps = [
-  {
-    icon: QrCode,
-    title: "Skeniraj QR kôd",
-    body: "na stranici kampanje ili tamo gdje je organizator podijeli — telefonom, kao bilo koju drugu uplatu.",
-  },
-  {
-    icon: Banknote,
-    title: "Potvrdi u svojoj banci ili Revolutu",
-    body: "iznos sam biraš. Bez otvaranja računa, bez kartice, bez novih aplikacija.",
-  },
-  {
-    icon: CheckCircle2,
-    title: "Uplata stigne u sekundi",
-    body: "kampanji koju si odabrao. Ti dobiješ potvrdu, organizator dobije sredstva.",
-  },
-];
-
-const creatorSteps = [
-  {
-    icon: Settings2,
-    title: "Pokreni kampanju",
-    body: "odaberi tip — donacija, crowdfunding, ulaznice, soft tokenizacija ili nekretnina — i postavi cilj.",
-  },
-  {
-    icon: Share2,
-    title: "Pinka generira QR i poveznicu",
-    body: "dijeli ih kako ti odgovara — na webu, u objavama, na društvenim mrežama ili uživo.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Sredstva se prikupljaju on-chain",
-    body: "javno, transparentno, u stvarnom vremenu. Ti i tvoja zajednica vidite isto stanje u istom trenu.",
-  },
-  {
-    icon: Wallet,
-    title: "Podigni kad budeš spreman",
-    body: "sredstvima upravlja tvoj Safe novčanik; isplata u SEPA u par klikova. Bez minimuma, bez obaveza.",
-  },
-];
+type Step = { icon: LucideIcon; title: string; body: string };
 
 type Tab = "supporter" | "creator";
 
 export function HowItWorks() {
+  const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("supporter");
+
+  const supporterSteps: Step[] = [
+    { icon: QrCode, key: "scan" },
+    { icon: Banknote, key: "confirm" },
+    { icon: CheckCircle2, key: "settled" },
+  ].map((s) => ({
+    icon: s.icon,
+    title: t(`how.supporter.${s.key}.title`),
+    body: t(`how.supporter.${s.key}.body`),
+  }));
+
+  const creatorSteps: Step[] = [
+    { icon: Settings2, key: "launch" },
+    { icon: Share2, key: "share" },
+    { icon: TrendingUp, key: "onchain" },
+    { icon: Wallet, key: "withdraw" },
+  ].map((s) => ({
+    icon: s.icon,
+    title: t(`how.creator.${s.key}.title`),
+    body: t(`how.creator.${s.key}.body`),
+  }));
 
   return (
     <section
@@ -67,28 +52,25 @@ export function HowItWorks() {
     >
       <div className="container-content">
         <SectionReveal className="max-w-3xl">
-          <span className="eyebrow">Kako radi</span>
+          <span className="eyebrow">{t("how.eyebrow")}</span>
           <h2 id="how-heading" className="mt-4 text-display-lg">
-            Jednostavno za sve.
+            {t("how.heading")}
           </h2>
-          <p className="mt-5 text-lg text-inkSoft">
-            Iste tračnice, dvije strane: podržavatelj vidi QR i potvrdu, organizator vidi
-            sredstva na računu — bez posrednika koji uzima dio na putu.
-          </p>
+          <p className="mt-5 text-lg text-inkSoft">{t("how.intro")}</p>
         </SectionReveal>
 
         {/* Mobile tabs */}
         <div className="md:hidden mt-10">
           <div
             role="tablist"
-            aria-label="Kako radi"
+            aria-label={t("how.eyebrow")}
             className="grid grid-cols-2 gap-1 rounded-md bg-sand p-1 text-sm font-medium"
           >
             <TabButton active={tab === "supporter"} onClick={() => setTab("supporter")} controls="panel-supporter">
-              Za podržavatelje
+              {t("how.tabSupporter")}
             </TabButton>
             <TabButton active={tab === "creator"} onClick={() => setTab("creator")} controls="panel-creator">
-              Za organizatore
+              {t("how.tabCreator")}
             </TabButton>
           </div>
           <div className="mt-6">
@@ -107,14 +89,14 @@ export function HowItWorks() {
         {/* Desktop two columns */}
         <div className="hidden md:grid grid-cols-2 gap-6 lg:gap-10 mt-16">
           <Column
-            title="Za podržavatelje"
-            subtitle="Tri koraka. Bez otvaranja računa."
+            title={t("how.supporterTitle")}
+            subtitle={t("how.supporterSubtitle")}
             accent="coral"
             steps={supporterSteps}
           />
           <Column
-            title="Za kreatore, udruge i timove"
-            subtitle="Četiri koraka. Bez tehničke gimnastike."
+            title={t("how.creatorTitle")}
+            subtitle={t("how.creatorSubtitle")}
             accent="teal"
             steps={creatorSteps}
           />
@@ -176,7 +158,7 @@ function Column({
   title: string;
   subtitle: string;
   accent: "coral" | "teal";
-  steps: typeof supporterSteps;
+  steps: Step[];
 }) {
   return (
     <SectionReveal className="rounded-lg border border-ink/8 bg-white/60 p-6 sm:p-8">
@@ -200,7 +182,7 @@ function StepsList({
   steps,
   accent,
 }: {
-  steps: typeof supporterSteps;
+  steps: Step[];
   accent: "coral" | "teal";
 }) {
   return (

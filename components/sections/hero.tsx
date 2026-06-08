@@ -1,12 +1,14 @@
 "use client";
 
-import { ArrowDown, Zap } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { PhoneMockup } from "@/components/phone-mockup";
 import { WaitlistDialog } from "@/components/waitlist/waitlist-dialog";
+import { useI18n } from "@/lib/i18n";
 
 export function Hero() {
+  const { t } = useI18n();
   // Same props on server + client; MotionProvider's reducedMotion="user"
   // collapses transitions to 0s for users with the OS opt-out.
   const fade = (delay = 0) => ({
@@ -37,7 +39,7 @@ export function Hero() {
             <motion.div {...fade(0)}>
               <span className="eyebrow">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-coral animate-pulse" aria-hidden />
-                Pre-launch · Pilot Q3 2026
+                {t("hero.badge")}
               </span>
             </motion.div>
 
@@ -46,19 +48,17 @@ export function Hero() {
               {...fade(0.05)}
               className="mt-5 text-display-xl text-ink"
             >
-              Prikupljaj sredstva{" "}
-              <span className="gradient-text">jednim skenom.</span>
+              {t("hero.titleA")}{" "}
+              <span className="gradient-text">{t("hero.titleHighlight")}</span>
               <br />
-              Bez naknada. U sekundi.
+              {t("hero.titleB")}
             </motion.h1>
 
             <motion.p
               {...fade(0.15)}
               className="mt-6 text-lg sm:text-xl text-inkSoft max-w-xl leading-relaxed"
             >
-              Pinka je onchain platforma za grupno financiranje. Spaja SEPA Instant i
-              programabilni euro pa podržavatelji uplate skenom, a kreatori, udruge i timovi
-              primaju sredstva izravno — bez kartičnih provizija, bez čekanja, bez kompromisa.
+              {t("hero.subtitle")}
             </motion.p>
 
             <motion.div
@@ -68,15 +68,24 @@ export function Hero() {
               <WaitlistDialog source="primary">
                 <Button size="lg" className="w-full sm:w-auto">
                   <Zap className="h-4 w-4" aria-hidden />
-                  Pridruži se listi čekanja
+                  {t("hero.cta")}
                 </Button>
               </WaitlistDialog>
               <a
                 href="#how"
                 className="inline-flex items-center justify-center gap-1.5 text-base font-medium text-inkSoft hover:text-ink transition-colors focus-ring rounded-md px-2 py-2"
               >
-                Kako radi
+                {t("hero.how")}
                 <ArrowDown className="h-4 w-4" aria-hidden />
+              </a>
+              <a
+                href="https://pinka.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 text-base font-medium text-teal hover:text-teal-700 transition-colors focus-ring rounded-md px-2 py-2"
+              >
+                {t("nav.viewApp")}
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
               </a>
             </motion.div>
 
@@ -84,9 +93,9 @@ export function Hero() {
               {...fade(0.35)}
               className="mt-10 grid grid-cols-3 gap-4 sm:gap-6 max-w-md"
             >
-              <Stat label="Provizija" value="0%" />
-              <Stat label="Brzina" value="<10s" />
-              <Stat label="Pokrivenost" value="EU/EEA" />
+              <Stat label={t("hero.statFee")} value="0%" />
+              <Stat label={t("hero.statSpeed")} value="<10s" />
+              <Stat label={t("hero.statCoverage")} value="EU/EEA" />
             </motion.dl>
           </div>
 

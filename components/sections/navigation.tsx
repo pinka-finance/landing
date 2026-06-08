@@ -5,8 +5,11 @@ import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { WaitlistDialog } from "@/components/waitlist/waitlist-dialog";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useI18n } from "@/lib/i18n";
 
 export function Navigation() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -26,18 +29,21 @@ export function Navigation() {
       )}
     >
       <nav
-        aria-label="Glavna navigacija"
+        aria-label={t("nav.ariaLabel")}
         className="container-hero flex h-16 sm:h-[72px] items-center justify-between"
       >
-        <a href="#" className="focus-ring rounded-md -m-1 p-1" aria-label="pinka — početna">
+        <a href="#" className="focus-ring rounded-md -m-1 p-1" aria-label={t("nav.homeAria")}>
           <Logo />
         </a>
-        <WaitlistDialog source="primary">
-          <Button size="sm">
-            <span className="hidden sm:inline">Pridruži se listi čekanja</span>
-            <span className="sm:hidden">Lista čekanja</span>
-          </Button>
-        </WaitlistDialog>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <WaitlistDialog source="primary">
+            <Button size="sm">
+              <span className="hidden sm:inline">{t("nav.cta")}</span>
+              <span className="sm:hidden">{t("nav.ctaShort")}</span>
+            </Button>
+          </WaitlistDialog>
+        </div>
       </nav>
     </header>
   );
